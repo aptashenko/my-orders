@@ -1,0 +1,124 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+  background: #f6f7f9;
+}
+
+html,
+body,
+#__nuxt {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  background: #f6f7f9;
+  color: #111827;
+  font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+}
+
+.p-component {
+  font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.app-shell {
+  overflow-x: hidden;
+}
+
+.app-shell .p-datatable {
+  max-width: 100%;
+}
+
+.app-shell .p-datatable-wrapper {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.app-shell .p-datatable-table {
+  min-width: 42rem;
+}
+
+.app-shell .p-datatable-tbody > tr > td,
+.app-shell .p-datatable-thead > tr > th {
+  vertical-align: top;
+  white-space: normal;
+}
+
+.app-shell .p-button {
+  min-height: 2.5rem;
+}
+
+.app-shell .p-button-label,
+.app-shell .p-tag-value {
+  white-space: normal;
+}
+
+.app-shell .p-inputtext,
+.app-shell .p-select,
+.app-shell .p-inputnumber,
+.app-shell .p-textarea {
+  max-width: 100%;
+}
+
+.app-shell .p-inputtext,
+.app-shell .p-select-label,
+.app-shell .p-inputnumber-input {
+  min-height: 2.5rem;
+}
+
+.p-dialog {
+  max-width: calc(100vw - 1rem);
+}
+
+.p-dialog .p-dialog-content {
+  max-height: calc(100dvh - 7rem);
+  overflow-y: auto;
+}
+
+@media (max-width: 640px) {
+  .app-shell .p-card,
+  .app-shell .p-datatable {
+    border-radius: 0.5rem;
+  }
+
+  .app-shell .p-datatable-table {
+    min-width: 38rem;
+  }
+
+  .app-shell .p-datatable-tbody > tr > td,
+  .app-shell .p-datatable-thead > tr > th {
+    padding: 0.75rem;
+  }
+
+  .app-shell .p-button:not(.p-button-icon-only) {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .app-shell .flex.flex-wrap.gap-2 > .p-button:not(.p-button-icon-only),
+  .app-shell .flex.justify-end > .p-button:not(.p-button-icon-only) {
+    flex: 1 1 11rem;
+  }
+
+  .p-dialog {
+    width: calc(100vw - 1rem) !important;
+    margin: 0.5rem;
+  }
+
+  .p-dialog .p-dialog-header,
+  .p-dialog .p-dialog-content {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .p-dialog form > .flex.justify-end {
+    flex-direction: column-reverse;
+  }
+}

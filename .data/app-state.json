@@ -1,0 +1,1874 @@
+{
+  "clients": [
+    {
+      "id": "client-1786104943888-06fc32d0d05b6",
+      "name": "Alauda Flores",
+      "type": "regular",
+      "contact": "",
+      "defaultCurrency": "EUR",
+      "paymentTerms": "",
+      "notes": ""
+    },
+    {
+      "id": "client-1783961052055-f18f593b519c78",
+      "name": "THE Cycle",
+      "type": "regular",
+      "contact": "",
+      "defaultCurrency": "EUR",
+      "paymentTerms": "",
+      "notes": ""
+    },
+    {
+      "id": "client-1783961007923-d0e8cdf799664",
+      "name": "Deniz Estate",
+      "type": "regular",
+      "contact": "",
+      "defaultCurrency": "EUR",
+      "paymentTerms": "",
+      "notes": ""
+    },
+    {
+      "id": "client-1783960977259-d9c1e8f8acd718",
+      "name": "KAMI",
+      "type": "regular",
+      "contact": "",
+      "defaultCurrency": "EUR",
+      "paymentTerms": "",
+      "notes": ""
+    }
+  ],
+  "deals": [
+    {
+      "id": "deal-1786104959129-f70f8166285ab",
+      "clientId": "client-1786104943888-06fc32d0d05b6",
+      "title": "CRM system",
+      "amount": 1250,
+      "currency": "EUR",
+      "status": "confirmed",
+      "startDate": "2026-08-01",
+      "dueDate": "2026-08-31",
+      "expectedPaymentDate": "2026-08-31",
+      "probability": 100,
+      "notes": []
+    },
+    {
+      "id": "deal-1786104907092-1c157d0ff641e",
+      "clientId": "client-1783960977259-d9c1e8f8acd718",
+      "title": "Доработка ИИ промптов",
+      "amount": 200,
+      "currency": "EUR",
+      "status": "confirmed",
+      "startDate": "2026-08-01",
+      "dueDate": "2026-08-31",
+      "expectedPaymentDate": "2026-08-31",
+      "probability": 100,
+      "notes": []
+    },
+    {
+      "id": "deal-1785763403056-feda8d6f66229",
+      "clientId": "client-1783961052055-f18f593b519c78",
+      "title": "Доработка рассылки",
+      "amount": 50,
+      "currency": "EUR",
+      "status": "confirmed",
+      "startDate": "2026-08-01",
+      "dueDate": "2026-08-31",
+      "expectedPaymentDate": "2026-08-31",
+      "probability": 100,
+      "notes": [
+        {
+          "id": "note-1785763418639-13685f9f40787",
+          "createdAt": "2026-08-03T13:23:38.639Z",
+          "text": "доработка рассылки (добавление картинок и кружочков)"
+        }
+      ]
+    },
+    {
+      "id": "deal-1785757238707-0fab7a6a16f1f8",
+      "clientId": "client-1783961052055-f18f593b519c78",
+      "title": "Support",
+      "amount": 150,
+      "currency": "EUR",
+      "status": "confirmed",
+      "startDate": "2026-08-01",
+      "dueDate": "2026-08-31",
+      "expectedPaymentDate": "2026-08-31",
+      "probability": 100,
+      "notes": []
+    },
+    {
+      "id": "deal-1785757206112-efc3555044a8d8",
+      "clientId": "client-1783961007923-d0e8cdf799664",
+      "title": "Meta ads API data",
+      "amount": 100,
+      "currency": "EUR",
+      "status": "confirmed",
+      "startDate": "2026-08-01",
+      "dueDate": "2026-08-31",
+      "expectedPaymentDate": "2026-08-31",
+      "probability": 100,
+      "notes": []
+    },
+    {
+      "id": "deal-1785387870223-606f2c5c5f9e",
+      "clientId": "client-1783960977259-d9c1e8f8acd718",
+      "title": "Доработка бота (видео)",
+      "amount": 150,
+      "currency": "EUR",
+      "status": "confirmed",
+      "startDate": "2026-07-30",
+      "dueDate": "2026-07-30",
+      "expectedPaymentDate": "2026-07-30",
+      "probability": 100,
+      "notes": []
+    },
+    {
+      "id": "deal-1784744502004-c63ca056b7deb8",
+      "clientId": "client-1783961052055-f18f593b519c78",
+      "title": "Доработка №3",
+      "amount": 25,
+      "currency": "EUR",
+      "status": "confirmed",
+      "startDate": "2026-07-22",
+      "dueDate": "2026-07-31",
+      "expectedPaymentDate": "2026-07-31",
+      "probability": 100,
+      "notes": [
+        {
+          "id": "note-1784744529622-b6a29e2a4941d8",
+          "createdAt": "2026-07-22T18:22:09.622Z",
+          "text": "реализация создания уникальных инвайт линков и лимитированных"
+        }
+      ]
+    },
+    {
+      "id": "deal-1783961206230-ac90107cdfa298",
+      "clientId": "client-1783960977259-d9c1e8f8acd718",
+      "title": "Чат бот спикинг клабы",
+      "amount": 500,
+      "currency": "EUR",
+      "status": "awaiting_payment",
+      "startDate": "2026-07-01",
+      "dueDate": "2026-07-31",
+      "expectedPaymentDate": "2026-07-31",
+      "probability": 100,
+      "notes": []
+    },
+    {
+      "id": "deal-1783961183573-604e3951900c2",
+      "clientId": "client-1783961052055-f18f593b519c78",
+      "title": "Доработка №2",
+      "amount": 25,
+      "currency": "EUR",
+      "status": "awaiting_payment",
+      "startDate": "2026-07-13",
+      "dueDate": "2026-07-13",
+      "expectedPaymentDate": "2026-07-13",
+      "probability": 100,
+      "notes": [
+        {
+          "id": "note-1784744476859-a7cd7905e1a4f8",
+          "createdAt": "2026-07-22T18:21:16.859Z",
+          "text": "авто отправка линка участникам кому открыли доступ вручную"
+        }
+      ]
+    },
+    {
+      "id": "deal-1783961115983-458fc01a1ff908",
+      "clientId": "client-1783961052055-f18f593b519c78",
+      "title": "Доработка №1",
+      "amount": 25,
+      "currency": "EUR",
+      "status": "awaiting_payment",
+      "startDate": "2026-07-13",
+      "dueDate": "2026-07-13",
+      "expectedPaymentDate": "2026-07-13",
+      "probability": 100,
+      "notes": [
+        {
+          "id": "note-1784744371818-2c015f07730eb",
+          "createdAt": "2026-07-22T18:19:31.818Z",
+          "text": "возможность делать метериалы бесплатными для подписчиков канала + utm метки"
+        }
+      ]
+    },
+    {
+      "id": "deal-1783961065056-effb151adaac08",
+      "clientId": "client-1783961052055-f18f593b519c78",
+      "title": "SUPPORT",
+      "amount": 150,
+      "currency": "EUR",
+      "status": "confirmed",
+      "startDate": "2026-07-01",
+      "dueDate": "2026-07-31",
+      "expectedPaymentDate": "2026-07-31",
+      "probability": 100,
+      "notes": []
+    },
+    {
+      "id": "deal-1783961029611-a422290e134d3",
+      "clientId": "client-1783961007923-d0e8cdf799664",
+      "title": "Создать базу данных",
+      "amount": 350,
+      "currency": "EUR",
+      "status": "awaiting_payment",
+      "startDate": "2026-07-01",
+      "dueDate": "2026-07-31",
+      "expectedPaymentDate": "2026-07-31",
+      "probability": 100,
+      "notes": []
+    },
+    {
+      "id": "deal-1783960996156-62a387ebc7aa4",
+      "clientId": "client-1783960977259-d9c1e8f8acd718",
+      "title": "SUPPORT",
+      "amount": 150,
+      "currency": "EUR",
+      "status": "confirmed",
+      "startDate": "2026-07-01",
+      "dueDate": "2026-07-31",
+      "expectedPaymentDate": "2026-08-02",
+      "probability": 100,
+      "notes": []
+    }
+  ],
+  "payments": [
+    {
+      "id": "payment-1786104964298-65abe994db7378",
+      "dealId": "deal-1786104959129-f70f8166285ab",
+      "amount": 1250,
+      "dueDate": "2026-08-31",
+      "paidDate": "",
+      "status": "expected",
+      "type": "milestone",
+      "method": "",
+      "invoice": ""
+    },
+    {
+      "id": "payment-1786104911721-9b14ab05afc4e8",
+      "dealId": "deal-1786104907092-1c157d0ff641e",
+      "amount": 200,
+      "dueDate": "2026-08-31",
+      "paidDate": "",
+      "status": "expected",
+      "type": "milestone",
+      "method": "",
+      "invoice": ""
+    },
+    {
+      "id": "payment-1786104876546-148eed2964498",
+      "dealId": "deal-1783960996156-62a387ebc7aa4",
+      "amount": 150,
+      "dueDate": "2026-08-31",
+      "paidDate": "",
+      "status": "expected",
+      "type": "milestone",
+      "method": "",
+      "invoice": ""
+    },
+    {
+      "id": "payment-1785763407521-aa0e2b8d119c6",
+      "dealId": "deal-1785763403056-feda8d6f66229",
+      "amount": 50,
+      "dueDate": "2026-08-31",
+      "paidDate": "",
+      "status": "expected",
+      "type": "milestone",
+      "method": "",
+      "invoice": ""
+    },
+    {
+      "id": "payment-1785757590504-5cab265fdd82c",
+      "dealId": "deal-1785757206112-efc3555044a8d8",
+      "amount": 100,
+      "dueDate": "2026-08-31",
+      "paidDate": "",
+      "status": "expected",
+      "type": "milestone",
+      "method": "",
+      "invoice": ""
+    },
+    {
+      "id": "payment-1785757556207-a1c4c1f7ad1008",
+      "dealId": "deal-1785757238707-0fab7a6a16f1f8",
+      "amount": 150,
+      "dueDate": "2026-08-31",
+      "paidDate": "",
+      "status": "expected",
+      "type": "milestone",
+      "method": "",
+      "invoice": ""
+    },
+    {
+      "id": "payment-1785387897784-2eb42e5c33a66",
+      "dealId": "deal-1785387870223-606f2c5c5f9e",
+      "amount": 150,
+      "dueDate": "2026-07-30",
+      "paidDate": "2026-08-07",
+      "status": "received",
+      "type": "milestone",
+      "method": "",
+      "invoice": ""
+    },
+    {
+      "id": "payment-1784744512446-a6a50660f8ef88",
+      "dealId": "deal-1784744502004-c63ca056b7deb8",
+      "amount": 25,
+      "dueDate": "2026-07-31",
+      "paidDate": "2026-08-07",
+      "status": "received",
+      "type": "milestone",
+      "method": "",
+      "invoice": ""
+    },
+    {
+      "id": "payment-1783962099823-596496bbab594",
+      "dealId": "deal-1783961206230-ac90107cdfa298",
+      "amount": 500,
+      "dueDate": "2026-07-31",
+      "paidDate": "2026-08-07",
+      "status": "received",
+      "type": "milestone",
+      "method": "",
+      "invoice": ""
+    },
+    {
+      "id": "payment-1783962085510-33031b7faee9b8",
+      "dealId": "deal-1783961029611-a422290e134d3",
+      "amount": 350,
+      "dueDate": "2026-07-31",
+      "paidDate": "2026-08-01",
+      "status": "received",
+      "type": "milestone",
+      "method": "",
+      "invoice": ""
+    },
+    {
+      "id": "payment-1783962071680-f79bd5afb3ac4",
+      "dealId": "deal-1783961065056-effb151adaac08",
+      "amount": 150,
+      "dueDate": "2026-07-31",
+      "paidDate": "2026-08-07",
+      "status": "received",
+      "type": "milestone",
+      "method": "",
+      "invoice": ""
+    },
+    {
+      "id": "payment-1783962059510-9af18fb9b6406",
+      "dealId": "deal-1783961115983-458fc01a1ff908",
+      "amount": 25,
+      "dueDate": "2026-07-31",
+      "paidDate": "2026-08-07",
+      "status": "received",
+      "type": "milestone",
+      "method": "",
+      "invoice": ""
+    },
+    {
+      "id": "payment-1783962048416-4be9bc4ff74288",
+      "dealId": "deal-1783961183573-604e3951900c2",
+      "amount": 25,
+      "dueDate": "2026-07-31",
+      "paidDate": "2026-08-07",
+      "status": "received",
+      "type": "milestone",
+      "method": "",
+      "invoice": ""
+    }
+  ],
+  "expenses": [
+    {
+      "id": "expense-1785387943170-4f4bbadd8c08c",
+      "dealId": "",
+      "title": "Налоги ФР",
+      "amount": 300,
+      "category": "taxes",
+      "date": "2026-07-31",
+      "recurring": "none"
+    }
+  ],
+  "expensePlannerCategories": [
+    {
+      "id": "planner-category-1784026486476-49380d105a066",
+      "name": "Location"
+    },
+    {
+      "id": "planner-category-1784026504188-796b3d1725eff8",
+      "name": "Еда"
+    },
+    {
+      "id": "planner-category-1784026515001-66ec6b1bb269",
+      "name": "Спорт"
+    },
+    {
+      "id": "planner-category-1784026531548-c61bb858efc53",
+      "name": "Одежда"
+    },
+    {
+      "id": "planner-category-1784026538576-3d5b8ca860195",
+      "name": "Садик"
+    },
+    {
+      "id": "planner-category-1784029400183-0cb0049843288",
+      "name": "Налоги"
+    },
+    {
+      "id": "planner-category-1784030093143-3071d7265e4348",
+      "name": "Все для дома"
+    },
+    {
+      "id": "planner-category-1784045162583-d37a76ac2d7eb",
+      "name": "Обучение"
+    },
+    {
+      "id": "planner-category-1784045261877-df0cee5c1c4418",
+      "name": "Здоровье"
+    },
+    {
+      "id": "planner-category-1784045320409-2fcda5bfc35678",
+      "name": "Подарки"
+    },
+    {
+      "id": "planner-category-1784045441257-73611cde9db7b",
+      "name": "Авто"
+    },
+    {
+      "id": "planner-category-1784045571507-346ec430526e08",
+      "name": "Карманные расходы"
+    },
+    {
+      "id": "planner-category-1784150420585-58dad6911081b",
+      "name": "Красота и тело"
+    },
+    {
+      "id": "planner-category-1784400924207-02f62381f201b",
+      "name": "credit",
+      "deletedAt": "2026-08-01T22:24:02.131Z"
+    },
+    {
+      "id": "planner-category-1785260154385-00016b2baad1d8",
+      "name": "Корм Собака"
+    },
+    {
+      "id": "planner-category-1785260254846-4db442d9659488",
+      "name": "Связь"
+    },
+    {
+      "id": "planner-category-1785567143773-1292fab7910218",
+      "name": "% по кредитам",
+      "deletedAt": "2026-08-01T22:24:09.581Z"
+    },
+    {
+      "id": "system-credit-principal",
+      "name": "Кредит тело",
+      "systemType": "credit_principal"
+    },
+    {
+      "id": "system-credit-interest",
+      "name": "Кредит проценты",
+      "systemType": "credit_interest"
+    }
+  ],
+  "plannedExpenses": [
+    {
+      "id": "planned-expense-1786260948966-89aa4a827aba68",
+      "title": "тело кредита Артем",
+      "categoryId": "system-credit-principal",
+      "creditCardId": "credit-card-1785760106508-263dc5d937df9",
+      "amount": 11500,
+      "currency": "UAH",
+      "plannedDate": "2026-08-07",
+      "notes": ""
+    },
+    {
+      "id": "planned-expense-1785622707515-2f271e982e7078",
+      "title": "Кредит проценты",
+      "categoryId": "system-credit-interest",
+      "creditCardId": "credit-card-1785760106508-263dc5d937df9",
+      "amount": 1428,
+      "currency": "UAH",
+      "plannedDate": "2026-08-01",
+      "notes": ""
+    },
+    {
+      "id": "planned-expense-1785622660098-e0f89d98411db8",
+      "title": "Кредит проценты",
+      "categoryId": "system-credit-interest",
+      "creditCardId": "credit-card-1785759413677-35e80a96dd942",
+      "amount": 6462,
+      "currency": "UAH",
+      "plannedDate": "2026-08-01",
+      "notes": ""
+    },
+    {
+      "id": "planned-expense-1785261230655-29fa71d155ace",
+      "title": "Одежда",
+      "categoryId": "planner-category-1784026531548-c61bb858efc53",
+      "amount": 150,
+      "currency": "EUR",
+      "plannedDate": "2026-08-07",
+      "notes": ""
+    },
+    {
+      "id": "planned-expense-1785261095573-988c1c8f9e4c2",
+      "title": "Карманные расходы",
+      "categoryId": "planner-category-1784045571507-346ec430526e08",
+      "amount": 150,
+      "currency": "EUR",
+      "plannedDate": "2026-08-22",
+      "notes": ""
+    },
+    {
+      "id": "planned-expense-1785261073903-464168dc235cb",
+      "title": "Карманные расходы",
+      "categoryId": "planner-category-1784045571507-346ec430526e08",
+      "creditCardId": "",
+      "amount": 150,
+      "currency": "EUR",
+      "plannedDate": "2026-08-16",
+      "notes": ""
+    },
+    {
+      "id": "planned-expense-1785261058384-3a286a58f7c54",
+      "title": "Карманные",
+      "categoryId": "planner-category-1784045571507-346ec430526e08",
+      "creditCardId": "",
+      "amount": 150,
+      "currency": "EUR",
+      "plannedDate": "2026-08-09",
+      "notes": ""
+    },
+    {
+      "id": "planned-expense-1785261015780-70c75cf0ae8928",
+      "title": "Авто",
+      "categoryId": "planner-category-1784045441257-73611cde9db7b",
+      "amount": 30,
+      "currency": "EUR",
+      "plannedDate": "2026-08-28",
+      "notes": ""
+    },
+    {
+      "id": "planned-expense-1785261001783-c848ca1af7814",
+      "title": "Авто",
+      "categoryId": "planner-category-1784045441257-73611cde9db7b",
+      "amount": 30,
+      "currency": "EUR",
+      "plannedDate": "2026-08-21",
+      "notes": ""
+    },
+    {
+      "id": "planned-expense-1785260981966-5b53ae21fe053",
+      "title": "Авто",
+      "categoryId": "planner-category-1784045441257-73611cde9db7b",
+      "amount": 30,
+      "currency": "EUR",
+      "plannedDate": "2026-08-14",
+      "notes": ""
+    },
+    {
+      "id": "planned-expense-1785260961595-4881761147fbd8",
+      "title": "Авто",
+      "categoryId": "planner-category-1784045441257-73611cde9db7b",
+      "amount": 30,
+      "currency": "EUR",
+      "plannedDate": "2026-08-07",
+      "notes": ""
+    },
+    {
+      "id": "planned-expense-1785260873385-75cedfe09472a",
+      "title": "Садик",
+      "categoryId": "planner-category-1784026538576-3d5b8ca860195",
+      "amount": 100,
+      "currency": "EUR",
+      "plannedDate": "2026-08-24",
+      "notes": ""
+    },
+    {
+      "id": "planned-expense-1785260816447-28d8e175ffc19",
+      "title": "Обучение",
+      "categoryId": "planner-category-1784045162583-d37a76ac2d7eb",
+      "amount": 8000,
+      "currency": "UAH",
+      "plannedDate": "2026-08-04",
+      "notes": ""
+    },
+    {
+      "id": "planned-expense-1785260658949-82a511d92271d",
+      "title": "Кредиты",
+      "categoryId": "planner-category-1784400924207-02f62381f201b",
+      "amount": 27150,
+      "currency": "UAH",
+      "plannedDate": "2026-08-15",
+      "notes": ""
+    },
+    {
+      "id": "planned-expense-1785260613847-3fef88fe10ca7",
+      "title": "Еда",
+      "categoryId": "planner-category-1784026504188-796b3d1725eff8",
+      "amount": 150,
+      "currency": "EUR",
+      "plannedDate": "2026-08-28",
+      "notes": ""
+    },
+    {
+      "id": "planned-expense-1785260601088-40e010ffa9901",
+      "title": "Еда",
+      "categoryId": "planner-category-1784026504188-796b3d1725eff8",
+      "amount": 150,
+      "currency": "EUR",
+      "plannedDate": "2026-08-21",
+      "notes": ""
+    },
+    {
+      "id": "planned-expense-1785260583159-ace9e2ed5b9418",
+      "title": "Еда",
+      "categoryId": "planner-category-1784026504188-796b3d1725eff8",
+      "amount": 150,
+      "currency": "EUR",
+      "plannedDate": "2026-08-14",
+      "notes": ""
+    },
+    {
+      "id": "planned-expense-1785260564443-770f0cfcd166a",
+      "title": "Еда",
+      "categoryId": "planner-category-1784026504188-796b3d1725eff8",
+      "amount": 150,
+      "currency": "EUR",
+      "plannedDate": "2026-08-07",
+      "notes": ""
+    },
+    {
+      "id": "planned-expense-1785260504821-c01f78f06720e8",
+      "title": "Спорт",
+      "categoryId": "planner-category-1784026515001-66ec6b1bb269",
+      "amount": 70,
+      "currency": "EUR",
+      "plannedDate": "2026-08-15",
+      "notes": ""
+    },
+    {
+      "id": "planned-expense-1785260391646-cecc6f57a4ad3",
+      "title": "Волосы Саша",
+      "categoryId": "planner-category-1784150420585-58dad6911081b",
+      "amount": 100,
+      "currency": "EUR",
+      "plannedDate": "2026-08-28",
+      "notes": ""
+    },
+    {
+      "id": "planned-expense-1785260362015-52c90a153c5ca8",
+      "title": "Здоровье",
+      "categoryId": "planner-category-1784045261877-df0cee5c1c4418",
+      "amount": 150,
+      "currency": "EUR",
+      "plannedDate": "2026-08-01",
+      "notes": ""
+    },
+    {
+      "id": "planned-expense-1785260326099-a447d8ee187a08",
+      "title": "коммуналка",
+      "categoryId": "planner-category-1784026486476-49380d105a066",
+      "amount": 300,
+      "currency": "EUR",
+      "plannedDate": "2026-08-15",
+      "notes": ""
+    },
+    {
+      "id": "planned-expense-1785260278034-bbe34791aac2a8",
+      "title": "Мобильная",
+      "categoryId": "planner-category-1785260254846-4db442d9659488",
+      "amount": 12,
+      "currency": "EUR",
+      "plannedDate": "2026-08-24",
+      "notes": ""
+    },
+    {
+      "id": "planned-expense-1785260232577-08fad133c5a588",
+      "title": "Корм собаке",
+      "categoryId": "planner-category-1785260154385-00016b2baad1d8",
+      "amount": 60,
+      "currency": "EUR",
+      "plannedDate": "2026-08-07",
+      "notes": ""
+    },
+    {
+      "id": "planned-expense-1785260089064-f4b93f194048a",
+      "title": "location August",
+      "categoryId": "planner-category-1784026486476-49380d105a066",
+      "amount": 1200,
+      "currency": "EUR",
+      "plannedDate": "2026-08-31",
+      "notes": ""
+    },
+    {
+      "id": "planned-expense-1784975404768-6b239f5d1c924",
+      "title": "Налоги",
+      "categoryId": "planner-category-1784029400183-0cb0049843288",
+      "amount": 550,
+      "currency": "EUR",
+      "plannedDate": "2026-08-05",
+      "notes": ""
+    },
+    {
+      "id": "planned-expense-1784894849795-c7976b2e17f3",
+      "title": "Авто",
+      "categoryId": "planner-category-1784045441257-73611cde9db7b",
+      "amount": 117,
+      "currency": "EUR",
+      "plannedDate": "2026-07-23",
+      "notes": ""
+    },
+    {
+      "id": "planned-expense-1784408708992-35305dbd858548",
+      "title": "Карманные расходы",
+      "categoryId": "planner-category-1784045571507-346ec430526e08",
+      "amount": 50,
+      "currency": "EUR",
+      "plannedDate": "2026-07-25",
+      "notes": ""
+    },
+    {
+      "id": "planned-expense-1784408627065-e9426cee7f58e8",
+      "title": "Одежда",
+      "categoryId": "planner-category-1784026531548-c61bb858efc53",
+      "amount": 40,
+      "currency": "EUR",
+      "plannedDate": "2026-07-23",
+      "notes": ""
+    },
+    {
+      "id": "planned-expense-1784408527981-f0357185399478",
+      "title": "Авто",
+      "categoryId": "planner-category-1784045441257-73611cde9db7b",
+      "amount": 40,
+      "currency": "EUR",
+      "plannedDate": "2026-07-30",
+      "notes": ""
+    },
+    {
+      "id": "planned-expense-1784408512848-8df8d81dbabe7",
+      "title": "Авто",
+      "categoryId": "planner-category-1784045441257-73611cde9db7b",
+      "amount": 40,
+      "currency": "EUR",
+      "plannedDate": "2026-07-23",
+      "notes": ""
+    },
+    {
+      "id": "planned-expense-1784408466660-f64512462ccc5",
+      "title": "Владику посылка",
+      "categoryId": "planner-category-1784045320409-2fcda5bfc35678",
+      "amount": 50,
+      "currency": "EUR",
+      "plannedDate": "2026-07-25",
+      "notes": ""
+    },
+    {
+      "id": "planned-expense-1784408399100-4bc6513fb9f34",
+      "title": "Еда",
+      "categoryId": "planner-category-1784026504188-796b3d1725eff8",
+      "amount": 105,
+      "currency": "EUR",
+      "plannedDate": "2026-07-29",
+      "notes": ""
+    },
+    {
+      "id": "planned-expense-1784408385339-525f39ceb12de",
+      "title": "Еда",
+      "categoryId": "planner-category-1784026504188-796b3d1725eff8",
+      "amount": 105,
+      "currency": "EUR",
+      "plannedDate": "2026-07-22",
+      "notes": ""
+    },
+    {
+      "id": "planned-expense-1784408335244-c764e1af28da78",
+      "title": "Обучение",
+      "categoryId": "planner-category-1784045162583-d37a76ac2d7eb",
+      "amount": 6000,
+      "currency": "UAH",
+      "plannedDate": "2026-07-19",
+      "notes": ""
+    },
+    {
+      "id": "planned-expense-1784406257927-21370342dba31",
+      "title": "Налоги",
+      "categoryId": "planner-category-1784029400183-0cb0049843288",
+      "amount": 350,
+      "currency": "EUR",
+      "plannedDate": "2026-07-27",
+      "notes": ""
+    },
+    {
+      "id": "planned-expense-1784400978924-fb978dfc89e41",
+      "title": "кредиты",
+      "categoryId": "planner-category-1784400924207-02f62381f201b",
+      "amount": 27150,
+      "currency": "UAH",
+      "plannedDate": "2026-07-18",
+      "notes": ""
+    },
+    {
+      "id": "planned-expense-1784150433545-a4fe7fa8cbadb",
+      "title": "расходники для Саши",
+      "categoryId": "planner-category-1784150420585-58dad6911081b",
+      "amount": 4,
+      "currency": "EUR",
+      "plannedDate": "2026-07-15",
+      "notes": ""
+    },
+    {
+      "id": "planned-expense-1784150304437-6e33a1c839a6d8",
+      "title": "Все для дома",
+      "categoryId": "planner-category-1784030093143-3071d7265e4348",
+      "amount": 8,
+      "currency": "EUR",
+      "plannedDate": "2026-07-15",
+      "notes": ""
+    },
+    {
+      "id": "planned-expense-1784045587070-0b1e5670278718",
+      "title": "Карманные",
+      "categoryId": "planner-category-1784045571507-346ec430526e08",
+      "amount": 103,
+      "currency": "EUR",
+      "plannedDate": "2026-07-15",
+      "notes": ""
+    },
+    {
+      "id": "planned-expense-1784045471108-823602d5b47dd8",
+      "title": "Авто",
+      "categoryId": "planner-category-1784045441257-73611cde9db7b",
+      "amount": 2,
+      "currency": "EUR",
+      "plannedDate": "2026-07-15",
+      "notes": ""
+    },
+    {
+      "id": "planned-expense-1784045404771-4bdf35db949ac",
+      "title": "Одежда",
+      "categoryId": "planner-category-1784026531548-c61bb858efc53",
+      "amount": 10,
+      "currency": "EUR",
+      "plannedDate": "2026-07-16",
+      "notes": ""
+    },
+    {
+      "id": "planned-expense-1784045277127-b914ff6ea68998",
+      "title": "Здоровье",
+      "categoryId": "planner-category-1784045261877-df0cee5c1c4418",
+      "amount": 30,
+      "currency": "EUR",
+      "plannedDate": "2026-07-24",
+      "notes": ""
+    },
+    {
+      "id": "planned-expense-1784045221544-2b4ab7db922c3",
+      "title": "Обучение",
+      "categoryId": "planner-category-1784045162583-d37a76ac2d7eb",
+      "amount": 36,
+      "currency": "EUR",
+      "plannedDate": "2026-07-18",
+      "notes": ""
+    },
+    {
+      "id": "planned-expense-1784028514053-931d494756a4a8",
+      "title": "Еда",
+      "categoryId": "planner-category-1784026504188-796b3d1725eff8",
+      "amount": 185,
+      "currency": "EUR",
+      "plannedDate": "2026-07-15",
+      "notes": ""
+    },
+    {
+      "id": "planned-expense-1784027024102-e60c5bffb54118",
+      "title": "Спорт",
+      "categoryId": "planner-category-1784026515001-66ec6b1bb269",
+      "amount": 70,
+      "currency": "EUR",
+      "plannedDate": "2026-07-14",
+      "notes": ""
+    },
+    {
+      "id": "planned-expense-1784026998408-759a96996c9848",
+      "title": "location",
+      "categoryId": "planner-category-1784026486476-49380d105a066",
+      "amount": 1200,
+      "currency": "EUR",
+      "plannedDate": "2026-07-31",
+      "notes": ""
+    }
+  ],
+  "expensePlannerPayments": [
+    {
+      "id": "planner-payment-1786261415471-e14f5a217d0628",
+      "plannedExpenseId": "planned-expense-1785260961595-4881761147fbd8",
+      "creditCardId": "",
+      "amount": 40,
+      "currency": "EUR",
+      "paidDate": "2026-08-08",
+      "notes": "билеті кино"
+    },
+    {
+      "id": "planner-payment-1786261404031-750b007cbc6f18",
+      "plannedExpenseId": "planned-expense-1785260961595-4881761147fbd8",
+      "creditCardId": "",
+      "amount": 10,
+      "currency": "EUR",
+      "paidDate": "2026-08-08",
+      "notes": "парковка"
+    },
+    {
+      "id": "planner-payment-1786261381343-6d6660935e20c",
+      "plannedExpenseId": "planned-expense-1785261058384-3a286a58f7c54",
+      "creditCardId": "",
+      "amount": 6,
+      "currency": "EUR",
+      "paidDate": "2026-08-08",
+      "notes": "лед на острове"
+    },
+    {
+      "id": "planner-payment-1786261366931-bf1736cc681cd",
+      "plannedExpenseId": "planned-expense-1785261058384-3a286a58f7c54",
+      "creditCardId": "",
+      "amount": 20,
+      "currency": "EUR",
+      "paidDate": "2026-08-08",
+      "notes": "буланжери на остров"
+    },
+    {
+      "id": "planner-payment-1786261311330-67ef96d37e22b",
+      "plannedExpenseId": "planned-expense-1785261058384-3a286a58f7c54",
+      "creditCardId": "",
+      "amount": 32,
+      "currency": "EUR",
+      "paidDate": "2026-08-07",
+      "notes": "auchan игрушки"
+    },
+    {
+      "id": "planner-payment-1786261282279-6cdc0678381bb8",
+      "plannedExpenseId": "planned-expense-1785261230655-29fa71d155ace",
+      "creditCardId": "",
+      "amount": 8,
+      "currency": "EUR",
+      "paidDate": "2026-08-07",
+      "notes": "decathlon"
+    },
+    {
+      "id": "planner-payment-1786261242433-8aee6c9403f4f8",
+      "plannedExpenseId": "planned-expense-1785261058384-3a286a58f7c54",
+      "creditCardId": "",
+      "amount": 8,
+      "currency": "EUR",
+      "paidDate": "2026-08-07",
+      "notes": "Paul"
+    },
+    {
+      "id": "planner-payment-1786261206325-1fe0b8049cbb18",
+      "plannedExpenseId": "planned-expense-1785260564443-770f0cfcd166a",
+      "creditCardId": "",
+      "amount": 40,
+      "currency": "EUR",
+      "paidDate": "2026-08-07",
+      "notes": "лидл"
+    },
+    {
+      "id": "planner-payment-1786261165123-d22ea985782d7",
+      "plannedExpenseId": "planned-expense-1785260961595-4881761147fbd8",
+      "creditCardId": "",
+      "amount": 40,
+      "currency": "EUR",
+      "paidDate": "2026-08-09",
+      "notes": "бензин"
+    },
+    {
+      "id": "planner-payment-1786261073695-87915914759d18",
+      "plannedExpenseId": "planned-expense-1785261058384-3a286a58f7c54",
+      "creditCardId": "credit-card-1785760106508-263dc5d937df9",
+      "amount": 355,
+      "currency": "UAH",
+      "paidDate": "2026-08-09",
+      "notes": "кинотеатр вода"
+    },
+    {
+      "id": "planner-payment-1786261055650-d37aadbbcfe66",
+      "plannedExpenseId": "planned-expense-1785261058384-3a286a58f7c54",
+      "creditCardId": "credit-card-1785760106508-263dc5d937df9",
+      "amount": 3285,
+      "currency": "UAH",
+      "paidDate": "2026-08-09",
+      "notes": "ресторан китай"
+    },
+    {
+      "id": "planner-payment-1786261038718-8353b45f291388",
+      "plannedExpenseId": "planned-expense-1785261058384-3a286a58f7c54",
+      "creditCardId": "credit-card-1785760106508-263dc5d937df9",
+      "amount": 1978,
+      "currency": "UAH",
+      "paidDate": "2026-08-09",
+      "notes": "Корабль остров"
+    },
+    {
+      "id": "planner-payment-1786260964652-c9c0fbd4916a9",
+      "plannedExpenseId": "planned-expense-1786260948966-89aa4a827aba68",
+      "creditCardId": "",
+      "amount": 11500,
+      "currency": "UAH",
+      "paidDate": "2026-08-09",
+      "notes": "the cycle доход"
+    },
+    {
+      "id": "planner-payment-1786105157691-7874946ee53f2",
+      "plannedExpenseId": "planned-expense-1785261058384-3a286a58f7c54",
+      "creditCardId": "",
+      "amount": 30,
+      "currency": "EUR",
+      "paidDate": "2026-08-07",
+      "notes": "стрижка"
+    },
+    {
+      "id": "planner-payment-1786105108974-557920a29de13",
+      "plannedExpenseId": "planned-expense-1785261058384-3a286a58f7c54",
+      "creditCardId": "",
+      "amount": 17,
+      "currency": "EUR",
+      "paidDate": "2026-08-07",
+      "notes": "комиссия креди агриколь 8.5 х 2"
+    },
+    {
+      "id": "planner-payment-1785941116061-e1602fb6ea9c8",
+      "plannedExpenseId": "planned-expense-1785260564443-770f0cfcd166a",
+      "creditCardId": "",
+      "amount": 43,
+      "currency": "EUR",
+      "paidDate": "2026-08-05",
+      "notes": "lidl"
+    },
+    {
+      "id": "planner-payment-1785920681442-782f445d1ddc9",
+      "plannedExpenseId": "planned-expense-1785261058384-3a286a58f7c54",
+      "creditCardId": "",
+      "amount": 9,
+      "currency": "EUR",
+      "paidDate": "2026-08-04",
+      "notes": "салюты"
+    },
+    {
+      "id": "planner-payment-1785914933124-fd8ee592468b88",
+      "plannedExpenseId": "planned-expense-1785261230655-29fa71d155ace",
+      "creditCardId": "credit-card-1785759413677-35e80a96dd942",
+      "amount": 64,
+      "currency": "EUR",
+      "paidDate": "2026-08-05",
+      "notes": "декатлон + ашан"
+    },
+    {
+      "id": "planner-payment-1785914863353-921e25b6e9d2b",
+      "plannedExpenseId": "planned-expense-1785260564443-770f0cfcd166a",
+      "creditCardId": "credit-card-1785759413677-35e80a96dd942",
+      "amount": 40,
+      "currency": "EUR",
+      "paidDate": "2026-08-05",
+      "notes": ""
+    },
+    {
+      "id": "planner-payment-1785911713325-3220d446f6d9b",
+      "plannedExpenseId": "planned-expense-1784975404768-6b239f5d1c924",
+      "creditCardId": "",
+      "amount": 558,
+      "currency": "EUR",
+      "paidDate": "2026-08-05",
+      "notes": ""
+    },
+    {
+      "id": "planner-payment-1785760723702-32f24c2b887868",
+      "plannedExpenseId": "planned-expense-1785260564443-770f0cfcd166a",
+      "creditCardId": "credit-card-1785759413677-35e80a96dd942",
+      "amount": 39,
+      "currency": "EUR",
+      "paidDate": "2026-08-03",
+      "notes": "Lidl"
+    },
+    {
+      "id": "planner-payment-1785751636171-290ee05a7d9198",
+      "plannedExpenseId": "planned-expense-1785260564443-770f0cfcd166a",
+      "amount": 30,
+      "currency": "EUR",
+      "paidDate": "2026-08-02",
+      "notes": "auchan",
+      "creditCardId": ""
+    },
+    {
+      "id": "planner-payment-1785622712024-ed377e62d0bd3",
+      "plannedExpenseId": "planned-expense-1785622707515-2f271e982e7078",
+      "amount": 1428,
+      "currency": "UAH",
+      "paidDate": "2026-08-01",
+      "notes": "",
+      "creditCardId": ""
+    },
+    {
+      "id": "planner-payment-1785622673260-abbff5b05f154",
+      "plannedExpenseId": "planned-expense-1785622660098-e0f89d98411db8",
+      "amount": 6462,
+      "currency": "UAH",
+      "paidDate": "2026-08-01",
+      "notes": "",
+      "creditCardId": ""
+    },
+    {
+      "id": "planner-payment-1785614284173-57c3ba0f3a6388",
+      "plannedExpenseId": "planned-expense-1785260961595-4881761147fbd8",
+      "amount": 12,
+      "currency": "EUR",
+      "paidDate": "2026-08-01",
+      "notes": "telepeage",
+      "creditCardId": ""
+    },
+    {
+      "id": "planner-payment-1785614243893-e9902f4d9b6ca8",
+      "plannedExpenseId": "planned-expense-1785260961595-4881761147fbd8",
+      "amount": 30,
+      "currency": "EUR",
+      "paidDate": "2026-08-01",
+      "notes": "verdon",
+      "creditCardId": ""
+    },
+    {
+      "id": "planner-payment-1785567867362-4b1c5c5c5d6e9",
+      "plannedExpenseId": "planned-expense-1784026998408-759a96996c9848",
+      "amount": 1200,
+      "currency": "EUR",
+      "paidDate": "2026-07-31",
+      "notes": "",
+      "creditCardId": ""
+    },
+    {
+      "id": "planner-payment-1785567484263-2e8147516b236",
+      "plannedExpenseId": "planned-expense-1785260564443-770f0cfcd166a",
+      "amount": 16,
+      "currency": "EUR",
+      "paidDate": "2026-08-01",
+      "notes": "",
+      "creditCardId": ""
+    },
+    {
+      "id": "planner-payment-1785567461976-e6859005bb923",
+      "plannedExpenseId": "planned-expense-1785260961595-4881761147fbd8",
+      "amount": 45,
+      "currency": "EUR",
+      "paidDate": "2026-08-01",
+      "notes": "платные дороги",
+      "creditCardId": ""
+    },
+    {
+      "id": "planner-payment-1785567265693-1ca2f2c8bd5348",
+      "plannedExpenseId": "planned-expense-1785260961595-4881761147fbd8",
+      "amount": 102,
+      "currency": "EUR",
+      "paidDate": "2026-08-01",
+      "notes": "проезд до лазурки",
+      "creditCardId": ""
+    },
+    {
+      "id": "planner-payment-1785567239119-f9fd8887c0132",
+      "plannedExpenseId": "planned-expense-1785261058384-3a286a58f7c54",
+      "amount": 44,
+      "currency": "EUR",
+      "paidDate": "2026-08-01",
+      "notes": "китай ресторан",
+      "creditCardId": ""
+    },
+    {
+      "id": "planner-payment-1785567094761-8ba66c0caed168",
+      "plannedExpenseId": "planned-expense-1785261058384-3a286a58f7c54",
+      "amount": 35,
+      "currency": "EUR",
+      "paidDate": "2026-08-01",
+      "notes": "",
+      "creditCardId": ""
+    },
+    {
+      "id": "planner-payment-1785567066982-a698ac551e03b",
+      "plannedExpenseId": "planned-expense-1785261058384-3a286a58f7c54",
+      "amount": 19,
+      "currency": "EUR",
+      "paidDate": "2026-08-01",
+      "notes": "",
+      "creditCardId": ""
+    },
+    {
+      "id": "planner-payment-1785567037980-407614c918704",
+      "plannedExpenseId": "planned-expense-1785260362015-52c90a153c5ca8",
+      "amount": 148,
+      "currency": "EUR",
+      "paidDate": "2026-08-01",
+      "notes": "",
+      "creditCardId": ""
+    },
+    {
+      "id": "planner-payment-1785395917934-e8c4bf4138509",
+      "plannedExpenseId": "planned-expense-1784408399100-4bc6513fb9f34",
+      "amount": 40,
+      "currency": "EUR",
+      "paidDate": "2026-07-30",
+      "notes": "аперо + закупка мини",
+      "creditCardId": ""
+    },
+    {
+      "id": "planner-payment-1785395892957-676bc62eac4a7",
+      "plannedExpenseId": "planned-expense-1784408708992-35305dbd858548",
+      "amount": 17,
+      "currency": "EUR",
+      "paidDate": "2026-07-29",
+      "notes": "кофе",
+      "creditCardId": ""
+    },
+    {
+      "id": "planner-payment-1785260009695-935d85096878d8",
+      "plannedExpenseId": "planned-expense-1784408708992-35305dbd858548",
+      "amount": 7,
+      "currency": "EUR",
+      "paidDate": "2026-07-28",
+      "notes": "кофе",
+      "creditCardId": ""
+    },
+    {
+      "id": "planner-payment-1785259963237-3ee35b7f5a873",
+      "plannedExpenseId": "planned-expense-1784408399100-4bc6513fb9f34",
+      "amount": 24,
+      "currency": "EUR",
+      "paidDate": "2026-07-27",
+      "notes": "корм матильда",
+      "creditCardId": ""
+    },
+    {
+      "id": "planner-payment-1785160486124-6ca08d12571e2",
+      "plannedExpenseId": "planned-expense-1784406257927-21370342dba31",
+      "amount": 350,
+      "currency": "EUR",
+      "paidDate": "2026-07-27",
+      "notes": "",
+      "creditCardId": ""
+    },
+    {
+      "id": "planner-payment-1785160234859-a865195c561898",
+      "plannedExpenseId": "planned-expense-1784408527981-f0357185399478",
+      "amount": 10,
+      "currency": "EUR",
+      "paidDate": "2026-07-26",
+      "notes": "parking",
+      "creditCardId": ""
+    },
+    {
+      "id": "planner-payment-1785160218999-922c1cc0a814f8",
+      "plannedExpenseId": "planned-expense-1784408708992-35305dbd858548",
+      "amount": 13,
+      "currency": "EUR",
+      "paidDate": "2026-07-26",
+      "notes": "puzzle cafe",
+      "creditCardId": ""
+    },
+    {
+      "id": "planner-payment-1784990845754-483c3842f61108",
+      "plannedExpenseId": "planned-expense-1784408708992-35305dbd858548",
+      "amount": 28,
+      "currency": "EUR",
+      "paidDate": "2026-07-25",
+      "notes": "буланжери",
+      "creditCardId": ""
+    },
+    {
+      "id": "planner-payment-1784990795336-78556abfc86918",
+      "plannedExpenseId": "planned-expense-1784408627065-e9426cee7f58e8",
+      "amount": 1750,
+      "currency": "UAH",
+      "paidDate": "2026-07-25",
+      "notes": "игрушки",
+      "creditCardId": ""
+    },
+    {
+      "id": "planner-payment-1784990756030-6c168dd486694",
+      "plannedExpenseId": "planned-expense-1784408466660-f64512462ccc5",
+      "amount": 784,
+      "currency": "UAH",
+      "paidDate": "2026-07-25",
+      "notes": "доставка",
+      "creditCardId": ""
+    },
+    {
+      "id": "planner-payment-1784990699776-b10045fd936a18",
+      "plannedExpenseId": "planned-expense-1784408527981-f0357185399478",
+      "amount": 19,
+      "currency": "EUR",
+      "paidDate": "2026-07-25",
+      "notes": "",
+      "creditCardId": ""
+    },
+    {
+      "id": "planner-payment-1784990688799-79a7b8afda2da8",
+      "plannedExpenseId": "planned-expense-1784408512848-8df8d81dbabe7",
+      "amount": 11,
+      "currency": "EUR",
+      "paidDate": "2026-07-25",
+      "notes": "",
+      "creditCardId": ""
+    },
+    {
+      "id": "planner-payment-1784974919077-33bc5b164fe97",
+      "plannedExpenseId": "planned-expense-1784408399100-4bc6513fb9f34",
+      "amount": 11,
+      "currency": "EUR",
+      "paidDate": "2026-07-25",
+      "notes": "marche",
+      "creditCardId": ""
+    },
+    {
+      "id": "planner-payment-1784921702778-225d1ddf92b408",
+      "plannedExpenseId": "planned-expense-1784408399100-4bc6513fb9f34",
+      "amount": 85,
+      "currency": "EUR",
+      "paidDate": "2026-07-24",
+      "notes": "",
+      "creditCardId": ""
+    },
+    {
+      "id": "planner-payment-1784921637878-89f9faba0cb26",
+      "plannedExpenseId": "planned-expense-1784045277127-b914ff6ea68998",
+      "amount": 30,
+      "currency": "EUR",
+      "paidDate": "2026-07-21",
+      "notes": "",
+      "creditCardId": ""
+    },
+    {
+      "id": "planner-payment-1784921619115-2ddc7fb1b71e78",
+      "plannedExpenseId": "planned-expense-1784408466660-f64512462ccc5",
+      "amount": 45,
+      "currency": "EUR",
+      "paidDate": "2026-07-23",
+      "notes": "",
+      "creditCardId": ""
+    },
+    {
+      "id": "planner-payment-1784921602155-924d1c9df21a78",
+      "plannedExpenseId": "planned-expense-1784045587070-0b1e5670278718",
+      "amount": 12,
+      "currency": "EUR",
+      "paidDate": "2026-07-23",
+      "notes": "кофе с Антуанет сильвер авто",
+      "creditCardId": ""
+    },
+    {
+      "id": "planner-payment-1784921467112-d542663fbc41f",
+      "plannedExpenseId": "planned-expense-1784408335244-c764e1af28da78",
+      "amount": 6000,
+      "currency": "UAH",
+      "paidDate": "2026-07-22",
+      "notes": "курсы",
+      "creditCardId": ""
+    },
+    {
+      "id": "planner-payment-1784920262521-27288770180c5",
+      "plannedExpenseId": "planned-expense-1784408385339-525f39ceb12de",
+      "amount": 28,
+      "currency": "EUR",
+      "paidDate": "2026-07-23",
+      "notes": "еда",
+      "creditCardId": ""
+    },
+    {
+      "id": "planner-payment-1784894947766-da32771449d94",
+      "plannedExpenseId": "planned-expense-1784408708992-35305dbd858548",
+      "amount": 1355,
+      "currency": "UAH",
+      "paidDate": "2026-07-23",
+      "notes": "макдо",
+      "creditCardId": ""
+    },
+    {
+      "id": "planner-payment-1784894856363-84a0438d4711f",
+      "plannedExpenseId": "planned-expense-1784894849795-c7976b2e17f3",
+      "amount": 117,
+      "currency": "EUR",
+      "paidDate": "2026-07-23",
+      "notes": "",
+      "creditCardId": ""
+    },
+    {
+      "id": "planner-payment-1784682447927-ca6a0c1a28a14",
+      "plannedExpenseId": "planned-expense-1784408385339-525f39ceb12de",
+      "amount": 32,
+      "currency": "EUR",
+      "paidDate": "2026-07-22",
+      "notes": "батарейки + химия",
+      "creditCardId": ""
+    },
+    {
+      "id": "planner-payment-1784682417920-9ad05b854a7ac",
+      "plannedExpenseId": "planned-expense-1784408385339-525f39ceb12de",
+      "amount": 31,
+      "currency": "EUR",
+      "paidDate": "2026-07-22",
+      "notes": "",
+      "creditCardId": ""
+    },
+    {
+      "id": "planner-payment-1784682382739-609a6714e834c8",
+      "plannedExpenseId": "planned-expense-1784408627065-e9426cee7f58e8",
+      "amount": 10,
+      "currency": "EUR",
+      "paidDate": "2026-07-22",
+      "notes": "",
+      "creditCardId": ""
+    },
+    {
+      "id": "planner-payment-1784682363735-5c97a84c13bbb8",
+      "plannedExpenseId": "planned-expense-1784408512848-8df8d81dbabe7",
+      "amount": 5,
+      "currency": "EUR",
+      "paidDate": "2026-07-22",
+      "notes": "проезд метро",
+      "creditCardId": ""
+    },
+    {
+      "id": "planner-payment-1784682346517-d9bf82bc1b57e8",
+      "plannedExpenseId": "planned-expense-1784408385339-525f39ceb12de",
+      "amount": 16,
+      "currency": "EUR",
+      "paidDate": "2026-07-22",
+      "notes": "",
+      "creditCardId": ""
+    },
+    {
+      "id": "planner-payment-1784682314406-1de334a2afb93",
+      "plannedExpenseId": "planned-expense-1784408708992-35305dbd858548",
+      "amount": 9,
+      "currency": "EUR",
+      "paidDate": "2026-07-22",
+      "notes": "кофе и перекус",
+      "creditCardId": ""
+    },
+    {
+      "id": "planner-payment-1784682300648-49395f9c4531e8",
+      "plannedExpenseId": "planned-expense-1784408627065-e9426cee7f58e8",
+      "amount": 15,
+      "currency": "EUR",
+      "paidDate": "2026-07-22",
+      "notes": "",
+      "creditCardId": ""
+    },
+    {
+      "id": "planner-payment-1784682287798-987fae2c862698",
+      "plannedExpenseId": "planned-expense-1784408466660-f64512462ccc5",
+      "amount": 28,
+      "currency": "EUR",
+      "paidDate": "2026-07-22",
+      "notes": "",
+      "creditCardId": ""
+    },
+    {
+      "id": "planner-payment-1784682253261-d3eb355aa41f6",
+      "plannedExpenseId": "planned-expense-1784408512848-8df8d81dbabe7",
+      "amount": 24,
+      "currency": "EUR",
+      "paidDate": "2026-07-22",
+      "notes": "",
+      "creditCardId": ""
+    },
+    {
+      "id": "planner-payment-1784582042768-8f1febe42991d",
+      "plannedExpenseId": "planned-expense-1784408385339-525f39ceb12de",
+      "amount": 20,
+      "currency": "EUR",
+      "paidDate": "2026-07-20",
+      "notes": "химия",
+      "creditCardId": ""
+    },
+    {
+      "id": "planner-payment-1784581947679-594f94e5e55d8",
+      "plannedExpenseId": "planned-expense-1784408708992-35305dbd858548",
+      "amount": 12,
+      "currency": "EUR",
+      "paidDate": "2026-07-20",
+      "notes": "кафе",
+      "creditCardId": ""
+    },
+    {
+      "id": "planner-payment-1784581902023-d9306ba7268f68",
+      "plannedExpenseId": "planned-expense-1784408385339-525f39ceb12de",
+      "amount": 3,
+      "currency": "EUR",
+      "paidDate": "2026-07-20",
+      "notes": "соль и хлеб",
+      "creditCardId": ""
+    },
+    {
+      "id": "planner-payment-1784400996147-d1075e8cc35088",
+      "plannedExpenseId": "planned-expense-1784400978924-fb978dfc89e41",
+      "amount": 15000,
+      "currency": "UAH",
+      "paidDate": "2026-07-18",
+      "notes": "Саша",
+      "creditCardId": ""
+    },
+    {
+      "id": "planner-payment-1784400989724-e8640781fe602",
+      "plannedExpenseId": "planned-expense-1784400978924-fb978dfc89e41",
+      "amount": 12150,
+      "currency": "UAH",
+      "paidDate": "2026-07-18",
+      "notes": "Артем",
+      "creditCardId": ""
+    },
+    {
+      "id": "planner-payment-1784400893870-39d81f251e1468",
+      "plannedExpenseId": "planned-expense-1784028514053-931d494756a4a8",
+      "amount": 1150,
+      "currency": "UAH",
+      "paidDate": "2026-07-18",
+      "notes": "mixmarkt",
+      "creditCardId": ""
+    },
+    {
+      "id": "planner-payment-1784400855037-5915ec99e19e4",
+      "plannedExpenseId": "planned-expense-1784045587070-0b1e5670278718",
+      "amount": 841,
+      "currency": "UAH",
+      "paidDate": "2026-07-18",
+      "notes": "tandem cafe",
+      "creditCardId": ""
+    },
+    {
+      "id": "planner-payment-1784400821224-929a96c19f52d8",
+      "plannedExpenseId": "planned-expense-1784045471108-823602d5b47dd8",
+      "amount": 2,
+      "currency": "EUR",
+      "paidDate": "2026-07-18",
+      "notes": "parking",
+      "creditCardId": ""
+    },
+    {
+      "id": "planner-payment-1784382702394-6049a35d884ac8",
+      "plannedExpenseId": "planned-expense-1784045221544-2b4ab7db922c3",
+      "amount": 1824,
+      "currency": "UAH",
+      "paidDate": "2026-07-18",
+      "notes": "",
+      "creditCardId": ""
+    },
+    {
+      "id": "planner-payment-1784382652139-32f9fb7ded06b",
+      "plannedExpenseId": "planned-expense-1784028514053-931d494756a4a8",
+      "amount": 17,
+      "currency": "EUR",
+      "paidDate": "2026-07-18",
+      "notes": "рынок",
+      "creditCardId": ""
+    },
+    {
+      "id": "planner-payment-1784382609841-19e648933399",
+      "plannedExpenseId": "planned-expense-1784028514053-931d494756a4a8",
+      "amount": 562,
+      "currency": "UAH",
+      "paidDate": "2026-07-17",
+      "notes": "карфур",
+      "creditCardId": ""
+    },
+    {
+      "id": "planner-payment-1784382581902-2323e357dc4f7",
+      "plannedExpenseId": "planned-expense-1784045587070-0b1e5670278718",
+      "amount": 655,
+      "currency": "UAH",
+      "paidDate": "2026-07-17",
+      "notes": "кафе",
+      "creditCardId": ""
+    },
+    {
+      "id": "planner-payment-1784281324036-30b9bd57829308",
+      "plannedExpenseId": "planned-expense-1784028514053-931d494756a4a8",
+      "amount": 22,
+      "currency": "EUR",
+      "paidDate": "2026-07-16",
+      "notes": "корм Матильда",
+      "creditCardId": ""
+    },
+    {
+      "id": "planner-payment-1784281199331-e9b3a32681548",
+      "plannedExpenseId": "planned-expense-1784045587070-0b1e5670278718",
+      "amount": 23,
+      "currency": "EUR",
+      "paidDate": "2026-07-16",
+      "notes": "плед 7,95\nвафкльница 14,95",
+      "creditCardId": ""
+    },
+    {
+      "id": "planner-payment-1784281172513-0680930a17ec68",
+      "plannedExpenseId": "planned-expense-1784045587070-0b1e5670278718",
+      "amount": 13,
+      "currency": "EUR",
+      "paidDate": "2026-07-16",
+      "notes": "химия Action",
+      "creditCardId": ""
+    },
+    {
+      "id": "planner-payment-1784281156269-6a70f4fe5aa4d",
+      "plannedExpenseId": "planned-expense-1784045587070-0b1e5670278718",
+      "amount": 14,
+      "currency": "EUR",
+      "paidDate": "2026-07-16",
+      "notes": "игрушки Action",
+      "creditCardId": ""
+    },
+    {
+      "id": "planner-payment-1784281054378-50f260cefd83f8",
+      "plannedExpenseId": "planned-expense-1784028514053-931d494756a4a8",
+      "amount": 5,
+      "currency": "EUR",
+      "paidDate": "2026-07-16",
+      "notes": "action",
+      "creditCardId": ""
+    },
+    {
+      "id": "planner-payment-1784281001770-b304cef126d838",
+      "plannedExpenseId": "planned-expense-1784045587070-0b1e5670278718",
+      "amount": 767,
+      "currency": "UAH",
+      "paidDate": "2026-07-16",
+      "notes": "MacDo",
+      "creditCardId": ""
+    },
+    {
+      "id": "planner-payment-1784150498570-ecd20f89a51bc",
+      "plannedExpenseId": "planned-expense-1784045587070-0b1e5670278718",
+      "amount": 9,
+      "currency": "EUR",
+      "paidDate": "2026-07-15",
+      "notes": "",
+      "creditCardId": ""
+    },
+    {
+      "id": "planner-payment-1784150436180-697727c65ce328",
+      "plannedExpenseId": "planned-expense-1784150433545-a4fe7fa8cbadb",
+      "amount": 4,
+      "currency": "EUR",
+      "paidDate": "2026-07-15",
+      "notes": "",
+      "creditCardId": ""
+    },
+    {
+      "id": "planner-payment-1784150308298-ba746e0d35032",
+      "plannedExpenseId": "planned-expense-1784150304437-6e33a1c839a6d8",
+      "amount": 8,
+      "currency": "EUR",
+      "paidDate": "2026-07-15",
+      "notes": "",
+      "creditCardId": ""
+    },
+    {
+      "id": "planner-payment-1784150224015-6a9bd03156a5",
+      "plannedExpenseId": "planned-expense-1784028514053-931d494756a4a8",
+      "amount": 107,
+      "currency": "EUR",
+      "paidDate": "2026-07-15",
+      "notes": "",
+      "creditCardId": ""
+    },
+    {
+      "id": "planner-payment-1784150137592-7803898e89771",
+      "plannedExpenseId": "planned-expense-1784045404771-4bdf35db949ac",
+      "amount": 10,
+      "currency": "EUR",
+      "paidDate": "2026-07-15",
+      "notes": "",
+      "creditCardId": ""
+    },
+    {
+      "id": "planner-payment-1784045080735-556a848d18d698",
+      "plannedExpenseId": "planned-expense-1784027024102-e60c5bffb54118",
+      "amount": 70,
+      "currency": "EUR",
+      "paidDate": "2026-07-14",
+      "notes": "",
+      "creditCardId": ""
+    }
+  ],
+  "incomePlannerCategories": [
+    {
+      "id": "income-planner-category-1784029434648-64c773c59fbcf8",
+      "name": "ABC Mobile"
+    },
+    {
+      "id": "income-planner-category-1784029438363-1be7132ee4eac",
+      "name": "SkyUP"
+    },
+    {
+      "id": "income-planner-category-1784029441678-4b69a478f5a828",
+      "name": "Freelance"
+    },
+    {
+      "id": "income-planner-category-1784975181679-0d27c38c6f7ac8",
+      "name": "L'aide social"
+    }
+  ],
+  "plannedIncomes": [
+    {
+      "id": "planned-income-1784975221648-c6e9c7e530239",
+      "title": "CAF",
+      "categoryId": "income-planner-category-1784975181679-0d27c38c6f7ac8",
+      "amount": 198,
+      "currency": "EUR",
+      "plannedDate": "2026-08-07",
+      "notes": ""
+    },
+    {
+      "id": "planned-income-1784922138308-a8f533838eb1e8",
+      "title": "Зарплата 2",
+      "categoryId": "income-planner-category-1784029438363-1be7132ee4eac",
+      "amount": 54050,
+      "currency": "UAH",
+      "plannedDate": "2026-08-31",
+      "notes": ""
+    },
+    {
+      "id": "planned-income-1784922116064-7a50866d871df",
+      "title": "Зарплата",
+      "categoryId": "income-planner-category-1784029438363-1be7132ee4eac",
+      "amount": 54050,
+      "currency": "UAH",
+      "plannedDate": "2026-08-17",
+      "notes": ""
+    },
+    {
+      "id": "planned-income-1784029581841-6925987913d288",
+      "title": "зп",
+      "categoryId": "income-planner-category-1784029434648-64c773c59fbcf8",
+      "amount": 1910,
+      "currency": "EUR",
+      "plannedDate": "2026-08-06",
+      "notes": ""
+    },
+    {
+      "id": "planned-income-1784029556181-af9328e57f85e8",
+      "title": "доход",
+      "categoryId": "income-planner-category-1784029441678-4b69a478f5a828",
+      "amount": 1375,
+      "currency": "EUR",
+      "plannedDate": "2026-08-05",
+      "notes": ""
+    },
+    {
+      "id": "planned-income-1784029489930-248837182119b",
+      "title": "зп",
+      "categoryId": "income-planner-category-1784029438363-1be7132ee4eac",
+      "amount": 54045,
+      "currency": "UAH",
+      "plannedDate": "2026-07-31",
+      "notes": ""
+    },
+    {
+      "id": "planned-income-1784029470965-0a0d984381b9a",
+      "title": "зп",
+      "categoryId": "income-planner-category-1784029438363-1be7132ee4eac",
+      "amount": 54045,
+      "currency": "UAH",
+      "plannedDate": "2026-07-17",
+      "notes": ""
+    }
+  ],
+  "incomePlannerPayments": [
+    {
+      "id": "income-planner-payment-1786261534552-b2a6fa58adf5e8",
+      "plannedIncomeId": "planned-income-1784029581841-6925987913d288",
+      "amount": 1910,
+      "currency": "EUR",
+      "paidDate": "2026-08-07",
+      "notes": ""
+    },
+    {
+      "id": "income-planner-payment-1786105049619-a676258afc3038",
+      "plannedIncomeId": "planned-income-1784029556181-af9328e57f85e8",
+      "amount": 225,
+      "currency": "EUR",
+      "paidDate": "2026-08-07",
+      "notes": "The cycle"
+    },
+    {
+      "id": "income-planner-payment-1786105041788-31b01fc0618758",
+      "plannedIncomeId": "planned-income-1784029556181-af9328e57f85e8",
+      "amount": 800,
+      "currency": "EUR",
+      "paidDate": "2026-08-07",
+      "notes": "Kami"
+    },
+    {
+      "id": "income-planner-payment-1785911697429-cea904c688b918",
+      "plannedIncomeId": "planned-income-1784975221648-c6e9c7e530239",
+      "amount": 198,
+      "currency": "EUR",
+      "paidDate": "2026-08-05",
+      "notes": ""
+    },
+    {
+      "id": "income-planner-payment-1785566196214-0488763b5f6ec",
+      "plannedIncomeId": "planned-income-1784029556181-af9328e57f85e8",
+      "amount": 350,
+      "currency": "EUR",
+      "paidDate": "2026-07-31",
+      "notes": ""
+    },
+    {
+      "id": "income-planner-payment-1785566103557-3158533c3e6108",
+      "plannedIncomeId": "planned-income-1784029489930-248837182119b",
+      "amount": 54045,
+      "currency": "UAH",
+      "paidDate": "2026-07-31",
+      "notes": ""
+    },
+    {
+      "id": "income-planner-payment-1784303434391-4622e9f72400c",
+      "plannedIncomeId": "planned-income-1784029470965-0a0d984381b9a",
+      "amount": 54045,
+      "currency": "UAH",
+      "paidDate": "2026-07-17",
+      "notes": ""
+    }
+  ],
+  "moneyBalances": [
+    {
+      "id": "money-1784582254418-23fd0ee645c04",
+      "title": "Имеющиеся деньги",
+      "amount": 289,
+      "currency": "EUR",
+      "date": "2026-07-20",
+      "notes": ""
+    },
+    {
+      "id": "money-1784029639607-7786d3c0a5b73",
+      "title": "Имеющиеся деньги",
+      "amount": 970,
+      "currency": "EUR",
+      "date": "2026-07-14",
+      "notes": ""
+    }
+  ],
+  "creditCards": [
+    {
+      "id": "credit-card-1785760106508-263dc5d937df9",
+      "title": "Monobank Artem",
+      "creditLimit": 60000,
+      "debt": 49618,
+      "currency": "UAH",
+      "notes": ""
+    },
+    {
+      "id": "credit-card-1785759413677-35e80a96dd942",
+      "title": "Monobank Sasha",
+      "creditLimit": 300000,
+      "debt": 220859.86880000003,
+      "currency": "UAH",
+      "notes": ""
+    }
+  ]
+}
