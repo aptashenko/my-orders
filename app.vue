@@ -854,6 +854,29 @@ const totalIncomePlannerPlanned = computed(() =>
   state.plannedIncomes.reduce((sum, income) => sum + plannedIncomeInEur(income), 0)
 )
 
+const monthWeekRanges = (monthValue: string) => {
+  const [year, month] = monthValue.split('-').map(Number)
+  const lastDay = monthDayCount(monthValue)
+  const ranges: Array<[number, number]> = []
+  let start = 1
+
+  while (start <= lastDay) {
+    const dayOfWeek = new Date(year, month - 1, start).getDay()
+    const daysUntilSunday = (7 - dayOfWeek) % 7
+    const end = Math.min(start + daysUntilSunday, lastDay)
+    ranges.push([start, end])
+    start = end + 1
+  }
+
+  return ranges
+    .filter(([start]) => start <= lastDay)
+    .map(([start, end], index) => ({
+      week: index + 1,
+      startDate: isoDate(year, month, start),
+      endDate: isoDate(year, month, Math.min(end, lastDay))
+    }))
+}
+
 const plannerMetrics = computed(() => {
   const plannedMonth = state.plannedExpenses
     .filter((expense) => expense.plannedDate.startsWith(selectedMonth.value) && isTrackedPlannedExpense(expense))
@@ -867,8 +890,29 @@ const plannerMetrics = computed(() => {
   const receivedIncomeMonth = state.incomePlannerPayments
     .filter((payment) => payment.paidDate.startsWith(selectedMonth.value))
     .reduce((sum, payment) => sum + incomePlannerPaymentInEur(payment), 0)
-  const remainingTotal = Math.max(0, totalPlannerPlanned.value - totalPlannerPaid.value)
-  const remainingIncomeTotal = Math.max(0, totalIncomePlannerPlanned.value - totalIncomePlannerPaid.value)
+  const remainingMonth = monthWeekRanges(selectedMonth.value).reduce((total, week) => {
+    const plannedExpenses = state.plannedExpenses.filter(
+      (expense) =>
+        expense.plannedDate >= week.startDate &&
+        expense.plannedDate <= week.endDate &&
+        isTrackedPlannedExpense(expense)
+    )
+    const planned = plannedExpenses.reduce((sum, expense) => sum + plannedExpenseInEur(expense), 0)
+    const paid = plannedExpenses.reduce(
+      (sum, expense) => sum + toEur(plannerExpenseFinancials(expense).paid, expense.currency),
+      0
+    )
+
+    return total + Math.max(0, planned - paid)
+  }, 0)
+  const remainingTotal = state.plannedExpenses
+    .filter(isTrackedPlannedExpense)
+    .reduce((sum, expense) => sum + toEur(plannerExpenseFinancials(expense).remaining, expense.currency), 0)
+  const remainingIncomeMonth = state.plannedIncomes
+    .filter((income) => income.plannedDate.startsWith(selectedMonth.value))
+    .reduce((sum, income) => sum + toEur(plannerIncomeFinancials(income).remaining, income.currency), 0)
+  const remainingIncomeTotal = state.plannedIncomes
+    .reduce((sum, income) => sum + toEur(plannerIncomeFinancials(income).remaining, income.currency), 0)
   const cashBalance = totalMoneyBalances.value + totalIncomePlannerPaid.value - totalPlannerPaid.value - totalCreditCardTransferPaid.value
 
   return {
@@ -876,15 +920,15 @@ const plannerMetrics = computed(() => {
     paidMonth,
     plannedIncomeMonth,
     receivedIncomeMonth,
-    remainingMonth: Math.max(0, plannedMonth - paidMonth),
-    remainingIncomeMonth: Math.max(0, plannedIncomeMonth - receivedIncomeMonth),
+    remainingMonth,
+    remainingIncomeMonth,
     totalMoney: totalMoneyBalances.value,
     totalPaid: totalPlannerPaid.value,
     totalIncomePaid: totalIncomePlannerPaid.value,
     remainingTotal,
     remainingIncomeTotal,
     cashBalance,
-    freeAfterPlan: cashBalance + Math.max(0, plannedIncomeMonth - receivedIncomeMonth) - Math.max(0, plannedMonth - paidMonth)
+    freeAfterPlan: cashBalance + remainingIncomeMonth - remainingMonth
   }
 })
 
@@ -969,28 +1013,7 @@ const cashTableRows = computed(() =>
   dailyCashForecast.value.filter((day) => day.income > 0 || day.expense > 0 || day.balance < 0)
 )
 
-const selectedMonthWeeks = computed(() => {
-  const [year, month] = selectedMonth.value.split('-').map(Number)
-  const lastDay = monthDayCount(selectedMonth.value)
-  const ranges: Array<[number, number]> = []
-  let start = 1
-
-  while (start <= lastDay) {
-    const dayOfWeek = new Date(year, month - 1, start).getDay()
-    const daysUntilSunday = (7 - dayOfWeek) % 7
-    const end = Math.min(start + daysUntilSunday, lastDay)
-    ranges.push([start, end])
-    start = end + 1
-  }
-
-  return ranges
-    .filter(([start]) => start <= lastDay)
-    .map(([start, end], index) => ({
-      week: index + 1,
-      startDate: isoDate(year, month, start),
-      endDate: isoDate(year, month, Math.min(end, lastDay))
-    }))
-})
+const selectedMonthWeeks = computed(() => monthWeekRanges(selectedMonth.value))
 
 const weeklyCashForecast = computed<CashForecastWeek[]>(() =>
   selectedMonthWeeks.value.map((week) => {
