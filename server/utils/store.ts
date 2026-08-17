@@ -151,7 +151,8 @@ const defaultState = (): AppState => ({
   plannedIncomes: [],
   incomePlannerPayments: [],
   moneyBalances: [],
-  creditCards: []
+  creditCards: [],
+  creditCardTransfers: []
 })
 
 const normalizeExpensePlannerPayments = (
@@ -171,7 +172,19 @@ const normalizeIncomePlannerPayments = (
   Array.isArray(payments)
     ? payments.map((payment) => ({
         ...payment,
+        creditCardId: typeof payment.creditCardId === 'string' ? payment.creditCardId : '',
         notes: typeof payment.notes === 'string' ? payment.notes : ''
+      }))
+    : []
+
+const normalizeCreditCardTransfers = (
+  transfers: Partial<AppState>['creditCardTransfers']
+): AppState['creditCardTransfers'] =>
+  Array.isArray(transfers)
+    ? transfers.map((transfer) => ({
+        ...transfer,
+        creditCardId: typeof transfer.creditCardId === 'string' ? transfer.creditCardId : '',
+        notes: typeof transfer.notes === 'string' ? transfer.notes : ''
       }))
     : []
 
@@ -191,7 +204,8 @@ const normalizeState = (state: Partial<AppState>): AppState => ({
   plannedIncomes: Array.isArray(state.plannedIncomes) ? state.plannedIncomes : [],
   incomePlannerPayments: normalizeIncomePlannerPayments(state.incomePlannerPayments),
   moneyBalances: Array.isArray(state.moneyBalances) ? state.moneyBalances : [],
-  creditCards: Array.isArray(state.creditCards) ? state.creditCards : []
+  creditCards: Array.isArray(state.creditCards) ? state.creditCards : [],
+  creditCardTransfers: normalizeCreditCardTransfers(state.creditCardTransfers)
 })
 
 const ensureStateTable = async () => {

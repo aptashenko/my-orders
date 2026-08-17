@@ -122,6 +122,7 @@ export interface PlannedIncome {
 export interface IncomePlannerPayment {
   id: string
   plannedIncomeId: string
+  creditCardId?: string
   amount: number
   currency: string
   paidDate: string
@@ -146,6 +147,15 @@ export interface CreditCard {
   notes: string
 }
 
+export interface CreditCardTransfer {
+  id: string
+  creditCardId: string
+  amount: number
+  currency: string
+  paidDate: string
+  notes: string
+}
+
 export interface AppState {
   clients: Client[]
   deals: Deal[]
@@ -159,4 +169,5 @@ export interface AppState {
   incomePlannerPayments: IncomePlannerPayment[]
   moneyBalances: MoneyBalance[]
   creditCards: CreditCard[]
+  creditCardTransfers: CreditCardTransfer[]
 }

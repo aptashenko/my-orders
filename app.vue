@@ -4,6 +4,7 @@ import type {
   Client,
   ClientType,
   CreditCard,
+  CreditCardTransfer,
   Deal,
   DealNote,
   DealStatus,
@@ -24,7 +25,7 @@ import type {
 
 type NavKey = 'dashboard' | 'clients' | 'expenses' | 'planner'
 type WorkspaceKey = 'orders' | 'planner'
-type PlannerView = 'overview' | 'categories' | 'creditCards'
+type PlannerView = 'overview' | 'categories' | 'creditCards' | 'expensePayments'
 
 interface DealFinancials {
   paid: number
@@ -80,6 +81,27 @@ interface CashForecastWeek {
   minBalance: number
   gapDays: number
   gapAmount: number
+}
+
+interface ExpensePaymentRow {
+  payment: ExpensePlannerPayment
+  expense?: PlannedExpense
+  category?: ExpensePlannerCategory
+  creditCard?: CreditCard
+}
+
+interface CreditCardPaymentRow {
+  id: string
+  kind: 'expense' | 'income' | 'transfer'
+  paidDate: string
+  amount: number
+  currency: string
+  title: string
+  categoryName: string
+  notes: string
+  payment?: ExpensePlannerPayment | IncomePlannerPayment
+  transfer?: CreditCardTransfer
+  source?: PlannedExpense | PlannedIncome
 }
 
 const workspaceItems: Array<{ key: WorkspaceKey; label: string; icon: string }> = [
@@ -174,7 +196,8 @@ const state = reactive<AppState>({
   plannedIncomes: [],
   incomePlannerPayments: [],
   moneyBalances: [],
-  creditCards: []
+  creditCards: [],
+  creditCardTransfers: []
 })
 
 const selectedNav = ref<NavKey>('clients')
@@ -208,12 +231,14 @@ const isPlannedIncomeDialogVisible = ref(false)
 const isIncomePlannerPaymentDialogVisible = ref(false)
 const isMoneyDialogVisible = ref(false)
 const isCreditCardDialogVisible = ref(false)
+const isCreditCardTransferDialogVisible = ref(false)
 const editingPlannedExpenseId = ref('')
 const editingPlannerPaymentId = ref('')
 const editingPlannedIncomeId = ref('')
 const editingIncomePlannerPaymentId = ref('')
 const editingMoneyBalanceId = ref('')
 const editingCreditCardId = ref('')
+const editingCreditCardTransferId = ref('')
 const editingPlannerCategoryId = ref('')
 const editingPlannerCategoryName = ref('')
 const editingIncomePlannerCategoryId = ref('')
@@ -226,6 +251,7 @@ if (data.value) {
   Object.assign(state, data.value)
 }
 if (!state.creditCards) state.creditCards = []
+if (!state.creditCardTransfers) state.creditCardTransfers = []
 systemExpensePlannerCategories.forEach((category) => {
   const existing = state.expensePlannerCategories.find((item) => item.id === category.id)
   if (existing) {
@@ -322,6 +348,7 @@ const emptyPlannedIncome = (): PlannedIncome => ({
 const emptyIncomePlannerPayment = (): IncomePlannerPayment => ({
   id: '',
   plannedIncomeId: selectedPlannedIncomeId.value || '',
+  creditCardId: '',
   amount: 0,
   currency: state.plannedIncomes.find((income) => income.id === selectedPlannedIncomeId.value)?.currency || 'EUR',
   paidDate: todayIso,
@@ -351,6 +378,15 @@ const emptyCreditCard = (): CreditCard => ({
   notes: ''
 })
 
+const emptyCreditCardTransfer = (): CreditCardTransfer => ({
+  id: '',
+  creditCardId: selectedCreditCardId.value || state.creditCards[0]?.id || '',
+  amount: 0,
+  currency: state.creditCards.find((card) => card.id === selectedCreditCardId.value)?.currency || 'EUR',
+  paidDate: todayIso,
+  notes: ''
+})
+
 const clientForm = reactive<Client>(emptyClient())
 const dealForm = reactive<Deal>(emptyDeal())
 const paymentForm = reactive<Payment>(emptyPayment())
@@ -363,6 +399,7 @@ const incomePlannerPaymentForm = reactive<IncomePlannerPayment>(emptyIncomePlann
 const incomePlannerCategoryForm = reactive<IncomePlannerCategory>(emptyIncomePlannerCategory())
 const moneyBalanceForm = reactive<MoneyBalance>(emptyMoneyBalance())
 const creditCardForm = reactive<CreditCard>(emptyCreditCard())
+const creditCardTransferForm = reactive<CreditCardTransfer>(emptyCreditCardTransfer())
 
 const id = (prefix: string) => `${prefix}-${Date.now()}-${Math.random().toString(16).slice(2)}`
 const isUnpaid = (payment: Payment) => payment.status !== 'received' && payment.status !== 'cancelled'
@@ -489,9 +526,28 @@ const selectedCreditCard = computed(() =>
   state.creditCards.find((card) => card.id === selectedCreditCardId.value)
 )
 
+const compareDatesDesc = (left: string, right: string) => right.localeCompare(left)
+
+const latestExpensePaymentDate = (expense: PlannedExpense) =>
+  state.expensePlannerPayments
+    .filter((payment) => payment.plannedExpenseId === expense.id)
+    .reduce((latest, payment) => (payment.paidDate > latest ? payment.paidDate : latest), '')
+
+const comparePlannedExpensesByFactDate = (left: PlannedExpense, right: PlannedExpense) => {
+  const leftFactDate = latestExpensePaymentDate(left)
+  const rightFactDate = latestExpensePaymentDate(right)
+
+  if (leftFactDate || rightFactDate) {
+    return compareDatesDesc(leftFactDate || left.plannedDate, rightFactDate || right.plannedDate)
+  }
+
+  return compareDatesDesc(left.plannedDate, right.plannedDate)
+}
+
 const selectedCreditCardExpenses = computed(() => {
   if (!selectedCreditCard.value) return []
   return state.plannedExpenses
+    .filter((expense) => !isCreditPrincipalExpense(expense))
     .filter((expense) => {
       if (expense.creditCardId === selectedCreditCard.value?.id) return true
       return state.expensePlannerPayments.some(
@@ -499,16 +555,101 @@ const selectedCreditCardExpenses = computed(() => {
           payment.plannedExpenseId === expense.id && payment.creditCardId === selectedCreditCard.value?.id
       )
     })
-    .sort((a, b) => b.plannedDate.localeCompare(a.plannedDate))
+    .sort(comparePlannedExpensesByFactDate)
 })
 
 const selectedCreditCardPaid = computed(() =>
-  selectedCreditCard.value
-    ? state.expensePlannerPayments
-        .filter((payment) => payment.creditCardId === selectedCreditCard.value?.id)
-        .reduce((sum, payment) => sum + plannerPaymentInEur(payment), 0)
-    : 0
+  selectedCreditCardPaymentRows.value
+    .filter((row) => row.kind === 'expense')
+    .reduce((sum, row) => sum + toEur(row.amount, row.currency), 0)
 )
+
+const selectedCreditCardIncomePaid = computed(() =>
+  selectedCreditCardPaymentRows.value
+    .filter((row) => row.kind === 'income')
+    .reduce((sum, row) => sum + toEur(row.amount, row.currency), 0)
+)
+
+const selectedCreditCardTransferPaid = computed(() =>
+  selectedCreditCardPaymentRows.value
+    .filter((row) => row.kind === 'transfer')
+    .reduce((sum, row) => sum + toEur(row.amount, row.currency), 0)
+)
+
+const selectedCreditCardPaymentRows = computed<CreditCardPaymentRow[]>(() => {
+  if (!selectedCreditCard.value) return []
+
+  const cardId = selectedCreditCard.value.id
+  const creditPrincipalExpenses = state.plannedExpenses
+    .filter((expense) => expense.creditCardId === cardId && getPlannerCategory(expense.categoryId)?.systemType === 'credit_principal')
+    .map((expense) => ({
+      id: expense.id,
+      kind: 'transfer' as const,
+      paidDate: latestExpensePaymentDate(expense) || expense.plannedDate,
+      amount: expense.amount,
+      currency: expense.currency,
+      title: plannedExpenseTitle(expense),
+      categoryName: 'Перевод с баланса',
+      notes: expense.notes,
+      source: expense
+    }))
+
+  const expenses = state.expensePlannerPayments
+    .filter((payment) => payment.creditCardId === cardId)
+    .map((payment) => {
+      const expense = getPlannedExpense(payment.plannedExpenseId)
+      const category = expense ? getPlannerCategory(expense.categoryId) : undefined
+      const isCreditPrincipalPayment = category?.systemType === 'credit_principal'
+      return {
+        id: payment.id,
+        kind: isCreditPrincipalPayment ? 'transfer' as const : 'expense' as const,
+        paidDate: payment.paidDate,
+        amount: payment.amount,
+        currency: payment.currency,
+        title: expense ? plannedExpenseTitle(expense) : 'Расход',
+        categoryName: category?.name ?? 'Без категории',
+        notes: payment.notes,
+        payment,
+        source: expense
+      }
+    })
+
+  const transfers = state.creditCardTransfers
+    .filter((transfer) => transfer.creditCardId === cardId)
+    .map((transfer) => ({
+      id: transfer.id,
+      kind: 'transfer' as const,
+      paidDate: transfer.paidDate,
+      amount: transfer.amount,
+      currency: transfer.currency,
+      title: 'Перевод на кредитную карту',
+      categoryName: 'Перевод с баланса',
+      notes: transfer.notes,
+      transfer
+    }))
+
+  const incomes = state.incomePlannerPayments
+    .filter((payment) => payment.creditCardId === cardId)
+    .map((payment) => {
+      const income = getPlannedIncome(payment.plannedIncomeId)
+      return {
+        id: payment.id,
+        kind: 'income' as const,
+        paidDate: payment.paidDate,
+        amount: payment.amount,
+        currency: payment.currency,
+        title: income?.title || 'Доход',
+        categoryName: income ? getIncomePlannerCategory(income.categoryId)?.name ?? 'Без категории' : 'Без категории',
+        notes: payment.notes,
+        payment,
+        source: income
+      }
+    })
+
+  return [...creditPrincipalExpenses, ...expenses.filter((row) => row.kind !== 'transfer'), ...transfers, ...incomes].sort(
+    (left, right) => compareDatesDesc(left.paidDate, right.paidDate) || right.id.localeCompare(left.id)
+  )
+})
 
 const dealPaymentMonths = (deal: Deal) =>
   state.payments
@@ -541,8 +682,32 @@ const selectedDealExpenses = computed(() =>
 
 const selectedPlannerPayments = computed(() =>
   selectedPlannedExpense.value
-    ? state.expensePlannerPayments.filter((payment) => payment.plannedExpenseId === selectedPlannedExpense.value?.id)
+    ? state.expensePlannerPayments
+        .filter((payment) => payment.plannedExpenseId === selectedPlannedExpense.value?.id)
+        .sort((left, right) => compareDatesDesc(left.paidDate, right.paidDate))
     : []
+)
+
+const expensePaymentRows = computed<ExpensePaymentRow[]>(() =>
+  state.expensePlannerPayments
+    .filter(isTrackedPlannerPayment)
+    .map((payment) => {
+      const expense = getPlannedExpense(payment.plannedExpenseId)
+      return {
+        payment,
+        expense,
+        category: expense ? getPlannerCategory(expense.categoryId) : undefined,
+        creditCard: getCreditCard(payment.creditCardId)
+      }
+    })
+    .sort((left, right) => {
+      const dateOrder = compareDatesDesc(left.payment.paidDate, right.payment.paidDate)
+      return dateOrder || right.payment.id.localeCompare(left.payment.id)
+    })
+)
+
+const expensePaymentRowsTotal = computed(() =>
+  expensePaymentRows.value.reduce((sum, row) => sum + plannerPaymentInEur(row.payment), 0)
 )
 
 const selectedIncomePlannerPayments = computed(() =>
@@ -561,13 +726,17 @@ const filteredClients = computed(() => {
 
 const filteredPlannedExpenses = computed(() => {
   const query = plannedExpenseSearch.value.trim().toLowerCase()
-  const monthExpenses = state.plannedExpenses.filter((expense) => isSelectedMonthDate(expense.plannedDate))
-  if (!query) return monthExpenses
+  const monthExpenses = state.plannedExpenses.filter(
+    (expense) => isSelectedMonthDate(expense.plannedDate) && isTrackedPlannedExpense(expense)
+  )
+  if (!query) return monthExpenses.sort(comparePlannedExpensesByFactDate)
 
-  return monthExpenses.filter((expense) => {
-    const category = getPlannerCategory(expense.categoryId)
-    return `${category?.name ?? ''} ${expense.notes}`.toLowerCase().includes(query)
-  })
+  return monthExpenses
+    .filter((expense) => {
+      const category = getPlannerCategory(expense.categoryId)
+      return `${category?.name ?? ''} ${expense.notes}`.toLowerCase().includes(query)
+    })
+    .sort(comparePlannedExpensesByFactDate)
 })
 
 const filteredPlannedIncomes = computed(() => {
@@ -657,16 +826,29 @@ const totalMoneyBalances = computed(() =>
 )
 
 const totalPlannerPaid = computed(() =>
-  state.expensePlannerPayments.reduce((sum, payment) => sum + plannerPaymentInEur(payment), 0)
+  state.expensePlannerPayments
+    .filter(isTrackedPlannerPayment)
+    .reduce((sum, payment) => sum + plannerPaymentInEur(payment), 0)
 )
 
 const totalPlannerPlanned = computed(() =>
-  state.plannedExpenses.reduce((sum, expense) => sum + plannedExpenseInEur(expense), 0)
+  state.plannedExpenses
+    .filter(isTrackedPlannedExpense)
+    .reduce((sum, expense) => sum + plannedExpenseInEur(expense), 0)
 )
 
 const totalIncomePlannerPaid = computed(() =>
   state.incomePlannerPayments.reduce((sum, payment) => sum + incomePlannerPaymentInEur(payment), 0)
 )
+
+const totalCreditCardTransferPaid = computed(() => {
+  const transfers = state.creditCardTransfers.reduce((sum, transfer) => sum + toEur(transfer.amount, transfer.currency), 0)
+  const legacyPrincipalTransfers = state.plannedExpenses
+    .filter(isCreditPrincipalExpense)
+    .reduce((sum, expense) => sum + plannedExpenseInEur(expense), 0)
+
+  return transfers + legacyPrincipalTransfers
+})
 
 const totalIncomePlannerPlanned = computed(() =>
   state.plannedIncomes.reduce((sum, income) => sum + plannedIncomeInEur(income), 0)
@@ -674,10 +856,10 @@ const totalIncomePlannerPlanned = computed(() =>
 
 const plannerMetrics = computed(() => {
   const plannedMonth = state.plannedExpenses
-    .filter((expense) => expense.plannedDate.startsWith(selectedMonth.value))
+    .filter((expense) => expense.plannedDate.startsWith(selectedMonth.value) && isTrackedPlannedExpense(expense))
     .reduce((sum, expense) => sum + plannedExpenseInEur(expense), 0)
   const paidMonth = state.expensePlannerPayments
-    .filter((payment) => payment.paidDate.startsWith(selectedMonth.value))
+    .filter((payment) => payment.paidDate.startsWith(selectedMonth.value) && isTrackedPlannerPayment(payment))
     .reduce((sum, payment) => sum + plannerPaymentInEur(payment), 0)
   const plannedIncomeMonth = state.plannedIncomes
     .filter((income) => income.plannedDate.startsWith(selectedMonth.value))
@@ -687,7 +869,7 @@ const plannerMetrics = computed(() => {
     .reduce((sum, payment) => sum + incomePlannerPaymentInEur(payment), 0)
   const remainingTotal = Math.max(0, totalPlannerPlanned.value - totalPlannerPaid.value)
   const remainingIncomeTotal = Math.max(0, totalIncomePlannerPlanned.value - totalIncomePlannerPaid.value)
-  const cashBalance = totalMoneyBalances.value + totalIncomePlannerPaid.value - totalPlannerPaid.value
+  const cashBalance = totalMoneyBalances.value + totalIncomePlannerPaid.value - totalPlannerPaid.value - totalCreditCardTransferPaid.value
 
   return {
     plannedMonth,
@@ -729,7 +911,7 @@ const dailyCashForecast = computed<CashForecastDay[]>(() => {
   })
 
   state.plannedExpenses.forEach((expense) => {
-    if (includeForecastDate(expense.plannedDate)) {
+    if (isTrackedPlannedExpense(expense) && includeForecastDate(expense.plannedDate)) {
       const amount = isCurrentMonthForecast
         ? toEur(plannerExpenseFinancials(expense).remaining, expense.currency)
         : plannedExpenseInEur(expense)
@@ -790,12 +972,15 @@ const cashTableRows = computed(() =>
 const selectedMonthWeeks = computed(() => {
   const [year, month] = selectedMonth.value.split('-').map(Number)
   const lastDay = monthDayCount(selectedMonth.value)
-  const firstDay = new Date(year, month - 1, 1).getDay()
-  const firstMonday = firstDay === 1 ? 1 : 1 + ((8 - firstDay) % 7)
   const ranges: Array<[number, number]> = []
+  let start = 1
 
-  for (let start = firstMonday; start + 6 <= lastDay; start += 7) {
-    ranges.push([start, start + 6])
+  while (start <= lastDay) {
+    const dayOfWeek = new Date(year, month - 1, start).getDay()
+    const daysUntilSunday = (7 - dayOfWeek) % 7
+    const end = Math.min(start + daysUntilSunday, lastDay)
+    ranges.push([start, end])
+    start = end + 1
   }
 
   return ranges
@@ -811,7 +996,10 @@ const weeklyCashForecast = computed<CashForecastWeek[]>(() =>
   selectedMonthWeeks.value.map((week) => {
     const days = dailyCashForecast.value.filter((day) => day.date >= week.startDate && day.date <= week.endDate)
     const plannedExpenses = state.plannedExpenses.filter(
-      (expense) => expense.plannedDate >= week.startDate && expense.plannedDate <= week.endDate
+      (expense) =>
+        expense.plannedDate >= week.startDate &&
+        expense.plannedDate <= week.endDate &&
+        isTrackedPlannedExpense(expense)
     )
     const planned = plannedExpenses.reduce((sum, expense) => sum + plannedExpenseInEur(expense), 0)
     const paid = plannedExpenses.reduce(
@@ -854,15 +1042,18 @@ const selectedPlannerWeekExpenses = computed(() => {
   const expenses = state.plannedExpenses.filter(
     (expense) =>
       expense.plannedDate >= selectedPlannerWeek.value!.startDate &&
-      expense.plannedDate <= selectedPlannerWeek.value!.endDate
+      expense.plannedDate <= selectedPlannerWeek.value!.endDate &&
+      isTrackedPlannedExpense(expense)
   )
 
-  if (!query) return expenses
+  if (!query) return expenses.sort(comparePlannedExpensesByFactDate)
 
-  return expenses.filter((expense) => {
-    const category = getPlannerCategory(expense.categoryId)
-    return `${category?.name ?? ''} ${expense.notes}`.toLowerCase().includes(query)
-  })
+  return expenses
+    .filter((expense) => {
+      const category = getPlannerCategory(expense.categoryId)
+      return `${category?.name ?? ''} ${expense.notes}`.toLowerCase().includes(query)
+    })
+    .sort(comparePlannedExpensesByFactDate)
 })
 
 const cashChart = computed(() => {
@@ -961,13 +1152,17 @@ const plannerCategoryRows = computed(() => {
     return rows.get(key)!
   }
 
-  state.plannedExpenses.filter((expense) => isSelectedMonthDate(expense.plannedDate)).forEach((expense) => {
+  state.plannedExpenses
+    .filter((expense) => isSelectedMonthDate(expense.plannedDate) && isTrackedPlannedExpense(expense))
+    .forEach((expense) => {
     const row = ensure(expense.categoryId)
     row.planned += plannedExpenseInEur(expense)
     row.count += 1
   })
 
-  state.expensePlannerPayments.filter((payment) => isSelectedMonthDate(payment.paidDate)).forEach((payment) => {
+  state.expensePlannerPayments
+    .filter((payment) => isSelectedMonthDate(payment.paidDate) && isTrackedPlannerPayment(payment))
+    .forEach((payment) => {
     const expense = getPlannedExpense(payment.plannedExpenseId)
     const row = ensure(expense?.categoryId ?? '')
     row.paid += plannerPaymentInEur(payment)
@@ -1025,10 +1220,10 @@ const plannerMonthRows = computed(() => {
     return rows.get(month)!
   }
 
-  state.plannedExpenses.forEach((expense) => {
+  state.plannedExpenses.filter(isTrackedPlannedExpense).forEach((expense) => {
     ensure(expense.plannedDate.slice(0, 7)).planned += plannedExpenseInEur(expense)
   })
-  state.expensePlannerPayments.forEach((payment) => {
+  state.expensePlannerPayments.filter(isTrackedPlannerPayment).forEach((payment) => {
     ensure(payment.paidDate.slice(0, 7)).paid += plannerPaymentInEur(payment)
   })
 
@@ -1107,6 +1302,7 @@ const pageTitle = computed(() => {
   if (selectedNav.value === 'planner') {
     if (plannerView.value === 'categories') return 'Категории'
     if (plannerView.value === 'creditCards') return 'Кредитные карты'
+    if (plannerView.value === 'expensePayments') return 'Платежи расходов'
     if (selectedPlannerWeek.value) return `Неделя ${selectedPlannerWeek.value.week}`
     return selectedPlannedExpense.value
       ? plannedExpenseTitle(selectedPlannedExpense.value)
@@ -1123,6 +1319,7 @@ const pageSubtitle = computed(() => {
   if (selectedNav.value === 'planner') {
     if (plannerView.value === 'categories') return 'Управление категориями доходов и расходов'
     if (plannerView.value === 'creditCards') return 'Кредитные лимиты, задолженность и доступный остаток'
+    if (plannerView.value === 'expensePayments') return 'Все фактические платежи по расходам, отсортированные по дате'
     if (selectedPlannerWeek.value) return `Расходы ${selectedPlannerWeek.value.label}, месячные доходы остаются общими`
     if (selectedPlannedIncome.value) return 'Карточка дохода, плановая сумма и фактические платежи'
     return selectedPlannedExpense.value
@@ -1144,15 +1341,58 @@ const getIncomePlannerCategory = (categoryId: string) =>
   state.incomePlannerCategories.find((category) => category.id === categoryId)
 const getCreditCard = (cardId?: string) => state.creditCards.find((card) => card.id === cardId)
 const creditCardAvailable = (card: CreditCard) => card.creditLimit - card.debt
+const isCreditPrincipalExpense = (expense?: PlannedExpense) =>
+  !!expense && getPlannerCategory(expense.categoryId)?.systemType === 'credit_principal'
+const isTrackedPlannedExpense = (expense: PlannedExpense) => !isCreditPrincipalExpense(expense)
+const isTrackedPlannerPayment = (payment: ExpensePlannerPayment) => {
+  const expense = getPlannedExpense(payment.plannedExpenseId)
+  return !expense || isTrackedPlannedExpense(expense)
+}
 const plannerPaymentCreditCardName = (payment: ExpensePlannerPayment) => getCreditCard(payment.creditCardId)?.title ?? ''
 const creditCardExpensePayments = (expense: PlannedExpense, card?: CreditCard) =>
   card
-    ? state.expensePlannerPayments.filter(
-        (payment) => payment.plannedExpenseId === expense.id && payment.creditCardId === card.id
-      )
+    ? state.expensePlannerPayments
+        .filter((payment) => payment.plannedExpenseId === expense.id && payment.creditCardId === card.id)
+        .sort((left, right) => compareDatesDesc(left.paidDate, right.paidDate))
     : []
 const creditCardExpensePaid = (expense: PlannedExpense, card?: CreditCard) =>
   creditCardExpensePayments(expense, card).reduce((sum, payment) => sum + plannerPaymentInEur(payment), 0)
+const creditCardMovementLabel = (kind: CreditCardPaymentRow['kind']) =>
+  kind === 'income' ? 'Доход' : kind === 'transfer' ? 'Перевод' : 'Расход'
+const creditCardMovementSeverity = (kind: CreditCardPaymentRow['kind']) =>
+  kind === 'expense' ? 'danger' : kind === 'transfer' ? 'info' : 'success'
+const creditCardMovementAmountClass = (kind: CreditCardPaymentRow['kind']) =>
+  kind === 'expense' ? 'text-red-700' : kind === 'transfer' ? 'text-blue-700' : 'text-emerald-700'
+const creditCardMovementTitleClass = (kind: CreditCardPaymentRow['kind']) =>
+  kind === 'expense' ? 'text-red-800' : kind === 'transfer' ? 'text-blue-800' : 'text-emerald-800'
+const openCreditCardPaymentRow = (row: CreditCardPaymentRow) => {
+  if (row.transfer) {
+    openEditCreditCardTransferDialog(row.transfer)
+    return
+  }
+
+  if (row.source) {
+    if (state.plannedExpenses.some((expense) => expense.id === row.source?.id)) {
+      openPlannedExpense(row.source as PlannedExpense)
+      return
+    }
+    if (state.plannedIncomes.some((income) => income.id === row.source?.id)) {
+      openPlannedIncome(row.source as PlannedIncome)
+      return
+    }
+  }
+
+  if (row.kind === 'income') {
+    if (!row.payment) return
+    const income = getPlannedIncome((row.payment as IncomePlannerPayment).plannedIncomeId)
+    if (income) openPlannedIncome(income)
+    return
+  }
+
+  if (!row.payment) return
+  const expense = getPlannedExpense((row.payment as ExpensePlannerPayment).plannedExpenseId)
+  if (expense) openPlannedExpense(expense)
+}
 const creditCardRowClass = (card: CreditCard) =>
   card.id === selectedCreditCardId.value ? '!bg-blue-50 cursor-pointer' : 'cursor-pointer'
 const applyPlannerPaymentCreditCharge = (payment: ExpensePlannerPayment, multiplier: 1 | -1) => {
@@ -1160,9 +1400,20 @@ const applyPlannerPaymentCreditCharge = (payment: ExpensePlannerPayment, multipl
   if (!card) return
   card.debt = Math.max(0, card.debt + convertCurrency(payment.amount, payment.currency, card.currency) * multiplier)
 }
+const applyCreditCardTransferDebt = (transfer: CreditCardTransfer, multiplier: 1 | -1) => {
+  const card = getCreditCard(transfer.creditCardId)
+  if (!card) return
+  card.debt = Math.max(0, card.debt - convertCurrency(transfer.amount, transfer.currency, card.currency) * multiplier)
+}
 const isCreditExpenseCategory = (categoryId: string) =>
   getPlannerCategory(categoryId)?.systemType === 'credit_principal' ||
   getPlannerCategory(categoryId)?.systemType === 'credit_interest'
+const applyCreditPrincipalExpenseDebt = (expense: PlannedExpense, multiplier: 1 | -1) => {
+  if (!isCreditPrincipalExpense(expense)) return
+  const card = getCreditCard(expense.creditCardId)
+  if (!card) return
+  card.debt = Math.max(0, card.debt - convertCurrency(expense.amount, expense.currency, card.currency) * multiplier)
+}
 const isCreditInterestExpense = (expense: PlannedExpense) =>
   getPlannerCategory(expense.categoryId)?.systemType === 'credit_interest'
 const creditCardInterestPaid = (card: CreditCard) => {
@@ -1200,6 +1451,15 @@ watch(
   () => plannedExpenseForm.categoryId,
   (categoryId) => {
     if (!isCreditExpenseCategory(categoryId)) plannedExpenseForm.creditCardId = ''
+  }
+)
+
+watch(
+  () => creditCardTransferForm.creditCardId,
+  (cardId) => {
+    if (editingCreditCardTransferId.value) return
+    const card = getCreditCard(cardId)
+    if (card) creditCardTransferForm.currency = card.currency
   }
 )
 
@@ -1329,6 +1589,14 @@ const openPlannerCreditCards = () => {
   plannerView.value = 'creditCards'
 }
 
+const openPlannerExpensePayments = () => {
+  selectedNav.value = 'planner'
+  selectedPlannedExpenseId.value = ''
+  selectedPlannedIncomeId.value = ''
+  selectedPlannerWeekStart.value = ''
+  plannerView.value = 'expensePayments'
+}
+
 const openClientDialog = () => {
   Object.assign(clientForm, emptyClient())
   isClientDialogVisible.value = true
@@ -1453,6 +1721,23 @@ const openEditCreditCardDialog = (card: CreditCard) => {
   isCreditCardDialogVisible.value = true
 }
 
+const openCreditCardTransferDialog = (card?: CreditCard) => {
+  editingCreditCardTransferId.value = ''
+  if (card) selectedCreditCardId.value = card.id
+  Object.assign(creditCardTransferForm, emptyCreditCardTransfer())
+  if (card) {
+    creditCardTransferForm.creditCardId = card.id
+    creditCardTransferForm.currency = card.currency
+  }
+  isCreditCardTransferDialogVisible.value = true
+}
+
+const openEditCreditCardTransferDialog = (transfer: CreditCardTransfer) => {
+  editingCreditCardTransferId.value = transfer.id
+  Object.assign(creditCardTransferForm, { ...transfer })
+  isCreditCardTransferDialogVisible.value = true
+}
+
 const addClient = () => {
   if (!clientForm.name.trim()) return
   const client = { ...clientForm, id: id('client') }
@@ -1535,10 +1820,12 @@ const submitPlannedExpense = () => {
   if (editingPlannedExpenseId.value) {
     const expenseIndex = state.plannedExpenses.findIndex((item) => item.id === editingPlannedExpenseId.value)
     if (expenseIndex === -1) return
+    applyCreditPrincipalExpenseDebt(state.plannedExpenses[expenseIndex], -1)
     state.plannedExpenses[expenseIndex] = expense
   } else {
     state.plannedExpenses.unshift(expense)
   }
+  applyCreditPrincipalExpenseDebt(expense, 1)
 
   openPlannedExpense(expense)
   editingPlannedExpenseId.value = ''
@@ -1690,6 +1977,26 @@ const submitCreditCard = () => {
   isCreditCardDialogVisible.value = false
 }
 
+const submitCreditCardTransfer = () => {
+  if (!creditCardTransferForm.creditCardId || creditCardTransferForm.amount <= 0) return
+  const transfer = { ...creditCardTransferForm, id: editingCreditCardTransferId.value || id('credit-card-transfer') }
+
+  if (editingCreditCardTransferId.value) {
+    const transferIndex = state.creditCardTransfers.findIndex((item) => item.id === editingCreditCardTransferId.value)
+    if (transferIndex === -1) return
+    applyCreditCardTransferDebt(state.creditCardTransfers[transferIndex], -1)
+    state.creditCardTransfers[transferIndex] = transfer
+  } else {
+    state.creditCardTransfers.unshift(transfer)
+  }
+  applyCreditCardTransferDebt(transfer, 1)
+
+  selectedCreditCardId.value = transfer.creditCardId
+  editingCreditCardTransferId.value = ''
+  Object.assign(creditCardTransferForm, emptyCreditCardTransfer())
+  isCreditCardTransferDialogVisible.value = false
+}
+
 const addNote = () => {
   if (!selectedDeal.value || !noteText.value.trim()) return
   selectedDeal.value.notes.unshift({
@@ -1735,6 +2042,7 @@ const removeExpense = (expense: Expense) => {
 }
 
 const removePlannedExpense = (expense: PlannedExpense) => {
+  applyCreditPrincipalExpenseDebt(expense, -1)
   state.expensePlannerPayments
     .filter((payment) => payment.plannedExpenseId === expense.id)
     .forEach((payment) => applyPlannerPaymentCreditCharge(payment, -1))
@@ -1779,9 +2087,15 @@ const removeMoneyBalance = (balance: MoneyBalance) => {
   state.moneyBalances = state.moneyBalances.filter((item) => item.id !== balance.id)
 }
 
+const removeCreditCardTransfer = (transfer: CreditCardTransfer) => {
+  applyCreditCardTransferDebt(transfer, -1)
+  state.creditCardTransfers = state.creditCardTransfers.filter((item) => item.id !== transfer.id)
+}
+
 const removeCreditCard = (card: CreditCard) => {
   state.creditCards = state.creditCards.filter((item) => item.id !== card.id)
   if (selectedCreditCardId.value === card.id) selectedCreditCardId.value = ''
+  state.creditCardTransfers = state.creditCardTransfers.filter((transfer) => transfer.creditCardId !== card.id)
   state.plannedExpenses = state.plannedExpenses.map((expense) =>
     expense.creditCardId === card.id ? { ...expense, creditCardId: '' } : expense
   )
@@ -2228,6 +2542,7 @@ if (import.meta.client) {
               </div>
               <div class="flex flex-wrap gap-2">
                 <Button icon="pi pi-tags" label="Категории" severity="secondary" @click="openPlannerCategories" />
+                <Button icon="pi pi-list" label="Платежи расходов" severity="secondary" @click="openPlannerExpensePayments" />
                 <Button icon="pi pi-wallet" label="Добавить деньги" severity="secondary" @click="openMoneyDialog" />
                 <Button icon="pi pi-credit-card" label="Карты" severity="secondary" @click="openPlannerCreditCards" />
                 <Button icon="pi pi-plus" label="Добавить доход" severity="success" @click="openPlannedIncomeDialog" />
@@ -2390,10 +2705,79 @@ if (import.meta.client) {
             </div>
           </section>
 
+          <section v-if="selectedNav === 'planner' && plannerView === 'expensePayments'" class="space-y-5">
+            <div class="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
+              <Button icon="pi pi-arrow-left" label="К планировщику" severity="secondary" @click="backToPlannedExpenses" />
+              <div class="grid gap-3 sm:grid-cols-2">
+                <div class="rounded-md border border-slate-200 bg-white px-4 py-3">
+                  <div class="text-sm text-slate-500">Платежей</div>
+                  <div class="mt-1 text-xl font-semibold text-slate-950">{{ expensePaymentRows.length }}</div>
+                </div>
+                <div class="rounded-md border border-slate-200 bg-white px-4 py-3">
+                  <div class="text-sm text-slate-500">Всего факт</div>
+                  <div class="mt-1 text-xl font-semibold text-slate-950">{{ money(expensePaymentRowsTotal, 'EUR') }}</div>
+                </div>
+              </div>
+            </div>
+
+            <DataTable :value="expensePaymentRows" responsive-layout="scroll" class="overflow-hidden rounded-md border border-slate-200">
+              <Column header="Факт дата платежа">
+                <template #body="{ data: row }">
+                  <div class="font-medium text-slate-950">{{ row.payment.paidDate || '—' }}</div>
+                </template>
+              </Column>
+              <Column header="Расход">
+                <template #body="{ data: row }">
+                  <button
+                    v-if="row.expense"
+                    class="text-left font-medium text-slate-950 hover:underline"
+                    type="button"
+                    @click="openPlannedExpense(row.expense)"
+                  >
+                    {{ plannedExpenseTitle(row.expense) }}
+                  </button>
+                  <div v-else class="font-medium text-slate-500">Расход не найден</div>
+                  <div class="text-sm text-slate-500">{{ row.category?.name ?? 'Без категории' }}</div>
+                </template>
+              </Column>
+              <Column header="Сумма">
+                <template #body="{ data: row }">
+                  <div class="font-semibold text-slate-950">{{ money(plannerPaymentInEur(row.payment), 'EUR') }}</div>
+                  <div class="text-xs text-slate-500">{{ money(row.payment.amount, row.payment.currency) }}</div>
+                </template>
+              </Column>
+              <Column header="Карта">
+                <template #body="{ data: row }">
+                  <span>{{ row.creditCard?.title ?? '—' }}</span>
+                </template>
+              </Column>
+              <Column header="Заметка">
+                <template #body="{ data: row }">
+                  <div class="max-w-md whitespace-pre-wrap text-sm text-slate-600">{{ row.payment.notes || '—' }}</div>
+                </template>
+              </Column>
+              <Column header="">
+                <template #body="{ data: row }">
+                  <div class="flex justify-end gap-1">
+                    <Button icon="pi pi-folder-open" severity="secondary" text rounded :disabled="!row.expense" @click="openPlannedExpense(row.expense)" />
+                    <Button icon="pi pi-pencil" severity="secondary" text rounded @click="openEditPlannerPaymentDialog(row.payment)" />
+                    <Button icon="pi pi-trash" severity="secondary" text rounded @click="removePlannerPayment(row.payment)" />
+                  </div>
+                </template>
+              </Column>
+              <template #empty>
+                <div class="p-4 text-sm text-slate-500">Фактических платежей по расходам пока нет.</div>
+              </template>
+            </DataTable>
+          </section>
+
           <section v-if="selectedNav === 'planner' && plannerView === 'creditCards'" class="space-y-5">
             <div class="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
               <Button icon="pi pi-arrow-left" label="К планировщику" severity="secondary" @click="backToPlannedExpenses" />
-              <Button icon="pi pi-plus" label="Добавить карту" severity="secondary" @click="openCreditCardDialog" />
+              <div class="flex flex-wrap gap-2">
+                <Button icon="pi pi-send" label="Перевод на карту" severity="secondary" :disabled="!state.creditCards.length" @click="openCreditCardTransferDialog(selectedCreditCard)" />
+                <Button icon="pi pi-plus" label="Добавить карту" severity="secondary" @click="openCreditCardDialog" />
+              </div>
             </div>
 
             <div class="grid gap-3 md:grid-cols-3">
@@ -2472,14 +2856,79 @@ if (import.meta.client) {
             <div v-if="selectedCreditCard" class="rounded-md border border-slate-200 bg-white p-4">
               <div class="mb-4 flex flex-col gap-3 lg:flex-row lg:items-start lg:justify-between">
                 <div>
-                  <h2 class="text-lg font-semibold text-slate-950">Расходы с карты {{ selectedCreditCard.title }}</h2>
+                  <h2 class="text-lg font-semibold text-slate-950">Движения по карте {{ selectedCreditCard.title }}</h2>
                   <div class="mt-1 text-sm text-slate-500">
-                    {{ selectedCreditCardExpenses.length }} поз. · оплачено {{ money(selectedCreditCardPaid, 'EUR') }}
+                    {{ selectedCreditCardPaymentRows.length }} платежей · расходы {{ money(selectedCreditCardPaid, 'EUR') }} · доходы {{ money(selectedCreditCardIncomePaid, 'EUR') }} · переводы {{ money(selectedCreditCardTransferPaid, 'EUR') }}
                   </div>
                 </div>
-                <Button icon="pi pi-times" label="Скрыть" severity="secondary" size="small" @click="selectedCreditCardId = ''" />
+                <div class="flex flex-wrap gap-2">
+                  <Button icon="pi pi-send" label="Перевод" severity="secondary" size="small" @click="openCreditCardTransferDialog(selectedCreditCard)" />
+                  <Button icon="pi pi-times" label="Скрыть" severity="secondary" size="small" @click="selectedCreditCardId = ''" />
+                </div>
               </div>
 
+              <DataTable :value="selectedCreditCardPaymentRows" data-key="id" responsive-layout="scroll" class="mb-4 overflow-hidden rounded-md border border-slate-200">
+                <Column header="Факт дата">
+                  <template #body="{ data: row }">
+                    <div class="font-medium text-slate-950">{{ row.paidDate || '—' }}</div>
+                  </template>
+                </Column>
+                <Column header="Тип">
+                  <template #body="{ data: row }">
+                    <Tag :severity="creditCardMovementSeverity(row.kind)" :value="creditCardMovementLabel(row.kind)" />
+                  </template>
+                </Column>
+                <Column header="Платеж">
+                  <template #body="{ data: row }">
+                    <button
+                      v-if="row.source"
+                      class="text-left font-medium hover:underline"
+                      :class="creditCardMovementTitleClass(row.kind)"
+                      type="button"
+                      @click="openCreditCardPaymentRow(row)"
+                    >
+                      {{ row.title }}
+                    </button>
+                    <button
+                      v-else-if="row.transfer"
+                      class="text-left font-medium hover:underline"
+                      :class="creditCardMovementTitleClass(row.kind)"
+                      type="button"
+                      @click="openEditCreditCardTransferDialog(row.transfer)"
+                    >
+                      {{ row.title }}
+                    </button>
+                    <div v-else class="font-medium" :class="creditCardMovementTitleClass(row.kind)">{{ row.title }}</div>
+                    <div class="text-sm text-slate-500">{{ row.categoryName }}</div>
+                  </template>
+                </Column>
+                <Column header="Сумма">
+                  <template #body="{ data: row }">
+                    <div class="font-semibold" :class="creditCardMovementAmountClass(row.kind)">
+                      {{ row.kind === 'expense' ? '-' : '+' }} {{ money(toEur(row.amount, row.currency), 'EUR') }}
+                    </div>
+                    <div class="text-xs text-slate-500">{{ money(row.amount, row.currency) }}</div>
+                  </template>
+                </Column>
+                <Column header="Заметка">
+                  <template #body="{ data: row }">
+                    <div class="max-w-md whitespace-pre-wrap text-sm text-slate-600">{{ row.notes || '—' }}</div>
+                  </template>
+                </Column>
+                <Column header="">
+                  <template #body="{ data: row }">
+                    <div v-if="row.transfer" class="flex justify-end gap-1">
+                      <Button icon="pi pi-pencil" severity="secondary" text rounded @click="openEditCreditCardTransferDialog(row.transfer)" />
+                      <Button icon="pi pi-trash" severity="secondary" text rounded @click="removeCreditCardTransfer(row.transfer)" />
+                    </div>
+                  </template>
+                </Column>
+                <template #empty>
+                  <div class="p-4 text-sm text-slate-500">По этой карте пока нет платежей.</div>
+                </template>
+              </DataTable>
+
+              <h3 class="mb-3 text-sm font-semibold uppercase text-slate-500">Плановые расходы этой карты</h3>
               <DataTable :value="selectedCreditCardExpenses" data-key="id" responsive-layout="scroll" class="overflow-hidden rounded-md border border-slate-200" :row-class="plannedExpenseRowClass">
                 <Column header="Расход">
                   <template #body="{ data: expense }">
@@ -3034,11 +3483,43 @@ if (import.meta.client) {
           <InputNumber v-model="incomePlannerPaymentForm.amount" class="w-full" input-class="w-full" :min="0" placeholder="Сумма платежа" />
           <Select v-model="incomePlannerPaymentForm.currency" class="w-full" :options="currencies" />
         </div>
+        <Select
+          v-model="incomePlannerPaymentForm.creditCardId"
+          class="w-full"
+          :options="creditCardOptions"
+          option-label="label"
+          option-value="value"
+          show-clear
+          placeholder="Зачислить на кредитную карту"
+        />
         <InputText v-model="incomePlannerPaymentForm.paidDate" class="w-full" type="date" />
         <Textarea v-model="incomePlannerPaymentForm.notes" class="w-full" rows="3" auto-resize placeholder="Заметка к платежу" />
         <div class="flex justify-end gap-2 pt-2">
           <Button label="Отмена" severity="secondary" type="button" @click="isIncomePlannerPaymentDialogVisible = false" />
           <Button :icon="editingIncomePlannerPaymentId ? 'pi pi-check' : 'pi pi-plus'" :label="editingIncomePlannerPaymentId ? 'Сохранить платеж' : 'Добавить платеж'" type="submit" />
+        </div>
+      </form>
+    </Dialog>
+
+    <Dialog v-model:visible="isCreditCardTransferDialogVisible" modal :header="editingCreditCardTransferId ? 'Редактировать перевод на карту' : 'Перевод на кредитную карту'" :style="{ width: 'min(520px, calc(100vw - 32px))' }">
+      <form class="space-y-3 pt-1" @submit.prevent="submitCreditCardTransfer">
+        <Select
+          v-model="creditCardTransferForm.creditCardId"
+          class="w-full"
+          :options="creditCardOptions"
+          option-label="label"
+          option-value="value"
+          placeholder="Кредитная карта"
+        />
+        <div class="grid gap-2 sm:grid-cols-[1fr_120px]">
+          <InputNumber v-model="creditCardTransferForm.amount" class="w-full" input-class="w-full" :min="0" placeholder="Сумма перевода" />
+          <Select v-model="creditCardTransferForm.currency" class="w-full" :options="currencies" />
+        </div>
+        <InputText v-model="creditCardTransferForm.paidDate" class="w-full" type="date" />
+        <Textarea v-model="creditCardTransferForm.notes" class="w-full" rows="3" auto-resize placeholder="Заметка к переводу" />
+        <div class="flex justify-end gap-2 pt-2">
+          <Button label="Отмена" severity="secondary" type="button" @click="isCreditCardTransferDialogVisible = false" />
+          <Button :icon="editingCreditCardTransferId ? 'pi pi-check' : 'pi pi-send'" :label="editingCreditCardTransferId ? 'Сохранить перевод' : 'Добавить перевод'" type="submit" />
         </div>
       </form>
     </Dialog>
